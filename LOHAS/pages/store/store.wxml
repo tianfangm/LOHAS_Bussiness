@@ -1,0 +1,21 @@
+<!--pages/store/store.wxml-->
+<view class="container">
+  <map class="store_map"></map>
+  
+</view>
+<view>
+  <van-grid clickable column-num="2">
+  <van-grid-item
+    icon="home-o"
+    link-type="navigateTo"
+    url="/pages/user/user"
+    text="商品管理"
+  />
+  <van-grid-item
+    icon="search"
+    link-type="navigateTo"
+    url="/pages/announcement/announcement"
+    text="公告管理"
+  />
+  </van-grid>
+</view>

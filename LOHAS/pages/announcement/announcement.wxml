@@ -1,0 +1,39 @@
+<!--pages/announcement/announcement.wxml-->
+<view>
+  <view class="container"> 
+    <view class="card-body">
+      <view class="page-section">
+        <view class="page-section-title">
+        </view>
+        <view class="page-section-spacing">
+          <scroll-view scroll-y="true" bindscrolltoupper="upper" bindscrolltolower="lower" bindscroll="scroll" scroll-into-view="{{toView}}" scroll-top="{{scrollTop}}">
+            <view 
+            class="menu_item" 
+            wx:for="{{shop_announcements}}"
+            wx:for-index="index"
+            wx:for-item="item"
+            wx:key="announcements_id"
+            >
+             <navigator>
+              <van-card
+              title="{{item.title}}"
+              desc="{{item.content}}"
+              >
+                <view slot="footer">
+                  <label>发布时间:{{item.publish_time}}</label>
+                  <van-button size="mini">修改</van-button>
+                  <van-button size="mini">删除</van-button>
+                </view>
+              </van-card>
+             </navigator>
+            </view>
+          </scroll-view>
+        </view>
+      </view>
+    </view>
+  </view>
+</view>
+<view class='placeholder-view'></view>
+<view class="bottom_btn">
+    <button class="submit_button" bindtap="jumpPage">发布公告</button>
+</view>

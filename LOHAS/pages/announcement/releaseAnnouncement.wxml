@@ -1,0 +1,24 @@
+<!--pages/announcement/releaseAnnouncement.wxml-->
+<view>
+  <van-cell-group>
+    <van-field
+    value="{{ value }}"
+    label="标题"
+    placeholder="请输入公告标题"
+    border="{{ false }}"
+    bind:input="getTitle"
+    />
+    <van-field
+    value="{{ message }}"
+    label="内容"
+    type="textarea"
+    placeholder="请输入公告内容"
+    autosize
+    border="{{ false }}"
+    bind:input="getContent"
+    />
+  </van-cell-group>
+</view>
+<view class="bottom_btn">
+    <button class="submit_button" bindtap="releaseAnnouncement">发布</button>
+</view>

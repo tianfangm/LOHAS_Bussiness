@@ -1,0 +1,36 @@
+{
+  "setting": {},
+  "condition": {
+    "plugin": {
+      "list": []
+    },
+    "game": {
+      "list": []
+    },
+    "gamePlugin": {
+      "list": []
+    },
+    "miniprogram": {
+      "list": [
+        {
+          "name": "announcement编辑",
+          "pathName": "pages/announcement/announcement",
+          "query": "",
+          "scene": null
+        },
+        {
+          "name": "login编译",
+          "pathName": "pages/login/login",
+          "query": "",
+          "scene": null
+        },
+        {
+          "name": "发布公告",
+          "pathName": "pages/announcement/releaseAnnouncement",
+          "query": "",
+          "scene": null
+        }
+      ]
+    }
+  }
+}
