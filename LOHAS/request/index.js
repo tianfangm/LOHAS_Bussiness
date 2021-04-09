@@ -5,7 +5,7 @@ export const request=(params)=>{
       ...params,
       url:baseUrl+params.url,
       success:(result)=>{
-        resolve(result.data.message);
+        resolve(result);
       },
       fail:(err)=>{
         reject(err);

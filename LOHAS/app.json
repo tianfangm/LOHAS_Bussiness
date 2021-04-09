@@ -19,7 +19,9 @@
     "van-col": "./dist/col/index",
     "van-button": "./dist/button/index",
     "van-card": "./dist/card/index",
-    "van-field": "dist/field/index"
+    "van-field": "dist/field/index",
+    "van-swipe-cell": "dist/swipe-cell/index",
+    "van-dialog": "dist/dialog/index"
   },
   "tabBar": {
     "color": "#a9b7b7",

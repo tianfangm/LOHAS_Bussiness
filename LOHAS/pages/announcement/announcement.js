@@ -1,6 +1,7 @@
 // pages/announcement/announcement.js
 import{request} from "../../request/index.js";
 import regeneratorRuntime from "../../lib/runtime/runtime";
+import Dialog from '../../dist/dialog/dialog';
 
 Page({
 
@@ -71,19 +72,24 @@ Page({
   },
 
   // 删除公告
-  async deleteAnnouncement(){
+  async deleteAnnouncement(id){
     try{
       const res = await request({
         url : "/announcement/delete",
         method : "POST",
         data:{
-          "announcement_id": 0
+          "announcement_id": id
         },
         header:{
           "content-type":"application/json",
           "token":wx.getStorageSync('token')
         }
       });
+      console.log(res);
+      if(res.state)
+      {
+        console.log("删除成功")
+      }
     }
     catch(error){
       console.log(error);
@@ -151,7 +157,31 @@ Page({
   /*
   * 滚动条触底事件
   */
- onReachBottom(){
-  console.log("页面触底");
- }
+  onReachBottom(){
+    console.log("页面触底");
+  },
+
+  // 删除公告
+  onClose(event) {
+    const { position, instance,name } = event.detail;
+    switch (position) {
+      case 'left':
+      case 'cell':
+        instance.close();
+        break;
+       case 'outside':
+        instance.close();
+        break;
+      case 'right':
+        Dialog.confirm({
+          message: '确定删除吗？',
+        }).then(() => {
+          this.deleteAnnouncement(name);
+          instance.close();
+        }).catch(()=>{
+            instance.close();
+        });
+        break;
+    }
+  },
 })

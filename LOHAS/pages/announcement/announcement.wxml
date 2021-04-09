@@ -12,19 +12,39 @@
             wx:for="{{shop_announcements}}"
             wx:for-index="index"
             wx:for-item="item"
-            wx:key="announcements_id"
+            wx:key="announcement_id"
             >
              <navigator>
-              <van-card
-              title="{{item.title}}"
-              desc="{{item.content}}"
+              <van-swipe-cell
+              id="swipe-cell"
+              left-width="{{ 65 }}"
+              right-width="{{ 65 }}"
+              name="{{item.announcement_id}}"
+              async-close
+              bind:close="onClose"
               >
-                <view slot="footer">
-                  <label>发布时间:{{item.publish_time}}</label>
-                  <van-button size="mini">修改</van-button>
-                  <van-button size="mini">删除</van-button>
+                <view
+                slot="left"
+                class="van-swipe-cell__left"
+                >
+                修改
                 </view>
-              </van-card>
+                <van-card
+                desc="{{item.content}}"
+                title="{{item.title}}"
+                class="announcement-card"
+                >
+                  <view slot="footer">
+                    <label>发布时间：{{item.publish_time}}</label>
+                  </view>
+                </van-card>
+                <view
+                slot="right"
+                class="van-swipe-cell__right"
+                >
+                删除
+                </view>
+                </van-swipe-cell>
              </navigator>
             </view>
           </scroll-view>
@@ -34,6 +54,7 @@
   </view>
 </view>
 <view class='placeholder-view'></view>
+<van-dialog id="van-dialog" />
 <view class="bottom_btn">
     <button class="submit_button" bindtap="jumpPage">发布公告</button>
 </view>
