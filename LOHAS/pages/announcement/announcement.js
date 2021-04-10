@@ -10,12 +10,14 @@ Page({
    */
   data: {
     // 公告列表
-    shop_announcements:[]
+    shop_announcements:[],
+    total_page:0
   },
+  
   // 接口要的参数
   QueryParams:{
     page_num:1,
-    page_size:10,
+    page_size:8,
   },
   /**
    * 生命周期函数--监听页面加载
@@ -61,7 +63,9 @@ Page({
       if(res.statusCode==200){
         // 把接口数据存入本地缓存
         this.setData({
-          shop_announcements:res.data.shop_announcements
+          // 拼接数组
+          shop_announcements:[...this.data.shop_announcements,...res.data.shop_announcements],
+          total_page:res.data.total_page
         });
         wx-wx.setStorageSync('announcement', {time:Date.now(),date:this.shop_announcements});
       }
@@ -159,6 +163,16 @@ Page({
   */
   onReachBottom(){
     console.log("页面触底");
+    // 判断还有没有下一页数据
+    if(this.QueryParams.page_num<this.data.total_page){
+      // 还有下一页
+      this.QueryParams.page_num+=1;
+      this.getAnnouncement();
+    }
+    else{
+      //没有下一页
+      wx-wx.showToast({title: '已经到底啦',})
+    }
   },
 
   // 删除公告
@@ -166,6 +180,8 @@ Page({
     const { position, instance,name } = event.detail;
     switch (position) {
       case 'left':
+        instance.close();
+        break;
       case 'cell':
         instance.close();
         break;

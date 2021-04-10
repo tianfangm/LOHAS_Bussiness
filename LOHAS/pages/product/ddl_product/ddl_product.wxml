@@ -1,0 +1,66 @@
+
+<view>
+  <view class="container"> 
+    <view class="card-body">
+      <view class="page-section">
+        <view class="page-section-title">
+        </view>
+        <view class="page-section-spacing">
+          <scroll-view scroll-y="true" bindscrolltoupper="upper" bindscrolltolower="lower" bindscroll="scroll" scroll-into-view="{{toView}}" scroll-top="{{scrollTop}}">
+            <view 
+            class="menu_item" 
+            wx:for="{{ddl_products}}"
+            wx:for-index="index"
+            wx:for-item="item"
+            wx:key="ddl_product_id"
+            >
+             <navigator>
+              <van-swipe-cell
+              id="swipe-cell"
+              left-width="{{ 65 }}"
+              right-width="{{ 65 }}"
+              name="{{item.product_id}}"
+              async-close
+              bind:close="onClose"
+              >
+                <view
+                slot="left"
+                class="van-swipe-cell__left"
+                >
+                修改
+                </view>
+                <van-card
+                tag="{{item.discount}}"
+                price="{{item.current_cost}}"
+                origin-price="{{item.origin_cost}}"
+                thumb="{{item.product_pic}}"
+                desc="{{item.product_intro}}"
+                title="{{item.product_name}}"
+                class="announcement-card"
+                >
+                  <view slot="footer">
+                    <label>发布日期：{{item.product_pubdate}}</label>
+                    <label>生产日期：{{item.production_date}}</label>
+                    <label>过期日期：{{item.expiry_date}}</label>
+                  </view>
+                </van-card>
+                <view
+                slot="right"
+                class="van-swipe-cell__right"
+                >
+                删除
+                </view>
+                </van-swipe-cell>
+             </navigator>
+            </view>
+          </scroll-view>
+        </view>
+      </view>
+    </view>
+  </view>
+</view>
+<view class='placeholder-view'></view>
+<van-dialog id="van-dialog" />
+<view class="bottom_btn">
+    <button class="submit_button" bindtap="jumpPage">发布临期商品</button>
+</view>

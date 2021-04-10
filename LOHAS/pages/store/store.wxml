@@ -8,14 +8,28 @@
   <van-grid-item
     icon="home-o"
     link-type="navigateTo"
-    url="/pages/user/user"
-    text="商品管理"
+    url="/pages/product/ddl_product/ddl_product"
+    text="临期商品管理"
   />
   <van-grid-item
     icon="search"
     link-type="navigateTo"
     url="/pages/announcement/announcement"
     text="公告管理"
+  />
+  </van-grid>
+  <van-grid clickable column-num="2">
+    <van-grid-item
+    icon="home-o"
+    link-type="navigateTo"
+    url="/pages/product/forsale_product"
+    text="折扣商品管理"
+  />
+  <van-grid-item
+    icon="search"
+    link-type="navigateTo"
+    url="/pages/announcement/announcement"
+    text="商家信息管理"
   />
   </van-grid>
 </view>

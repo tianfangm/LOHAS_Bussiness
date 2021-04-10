@@ -4,7 +4,9 @@
     "pages/announcement/announcement",
     "pages/user/user",
     "pages/login/login",
-    "pages/announcement/releaseAnnouncement"
+    "pages/announcement/releaseAnnouncement",
+    "pages/product/ddl_product/ddl_product",
+    "pages/product/ddl_product/create_ddl_product"
   ],
   "window": {
     "backgroundTextStyle": "light",
@@ -21,7 +23,13 @@
     "van-card": "./dist/card/index",
     "van-field": "dist/field/index",
     "van-swipe-cell": "dist/swipe-cell/index",
-    "van-dialog": "dist/dialog/index"
+    "van-dialog": "dist/dialog/index",
+    "van-uploader": "dist/uploader/index",
+    "van-calendar": "dist/calendar/index",
+    "van-popup": "dist/popup/index",
+    "van-cell": "dist/cell/index",
+    "van-cell-group": "dist/cell-group/index",
+    "van-datetime-picker": "dist/datetime-picker/index"
   },
   "tabBar": {
     "color": "#a9b7b7",

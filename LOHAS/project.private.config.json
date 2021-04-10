@@ -29,6 +29,17 @@
           "pathName": "pages/announcement/releaseAnnouncement",
           "query": "",
           "scene": null
+        },
+        {
+          "name": "商品管理",
+          "pathName": "pages/product/ddl_product/ddl_product",
+          "query": "",
+          "scene": null
+        },
+        {
+          "name": "发布商品",
+          "pathName": "pages/product/ddl_product/create_ddl_product",
+          "scene": null
         }
       ]
     }
