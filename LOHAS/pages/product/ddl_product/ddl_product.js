@@ -171,11 +171,14 @@ Page({
   }
 },
 
-// 删除公告
+// 删除修改公告
 onClose(event) {
   const { position, instance,name } = event.detail;
   switch (position) {
     case 'left':
+      wx.navigateTo({
+        url: './update_ddl_product?ddl_product_id='+name,
+      })
       instance.close();
       break;
     case 'cell':

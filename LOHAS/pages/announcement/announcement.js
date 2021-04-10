@@ -13,7 +13,7 @@ Page({
     shop_announcements:[],
     total_page:0
   },
-  
+
   // 接口要的参数
   QueryParams:{
     page_num:1,
@@ -180,6 +180,9 @@ Page({
     const { position, instance,name } = event.detail;
     switch (position) {
       case 'left':
+        wx.navigateTo({
+          url: './update_announcement?a_id='+name,
+        })
         instance.close();
         break;
       case 'cell':

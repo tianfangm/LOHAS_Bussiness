@@ -1,7 +1,9 @@
+// pages/product/ddl_product/update_ddl_product.js
 import{request,uploadFile} from "../../../request/index.js";
 import regeneratorRuntime from "../../../lib/runtime/runtime";
 
 const twoYearsAgo = 365*24*3600*1000;
+
 Page({
 
   /**
@@ -21,26 +23,26 @@ Page({
       return value;
     },
 
-    submit_btn_text:"发布",
-
-    fileList:[],
   },
-
+  
+  //参数
   QueryParams:{
-    current_cost:0,
-    expiry_date:"",
-    origin_cost:0,
-    product_intro:"",
-    product_name:"",
-    product_pic:"",
-    production_date:""
+    "current_cost": 0,
+    "expiry_date": "",
+    "origin_cost": 0,
+    "product_id": 0,
+    "product_intro": "",
+    "product_name": "",
+    "product_pic": "",
+    "production_date": ""
   },
 
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-    
+    this.QueryParams.product_id=options.ddl_product_id;
+    console.log(this.QueryParams.product_id)
   },
 
   /**
@@ -92,7 +94,6 @@ Page({
 
   },
 
-  // 文件上传完毕后触发afterread回调，获取对应文件的临时地址，使用wx.uploadFile将图片上传到远程服务器上
   async afterRead(event) {
     console.log(event);
     const { file } = event.detail;
@@ -125,19 +126,19 @@ Page({
     this.QueryParams.expiry_date = end;
   },
 
-  onChangeGoodsName(event){
+  onChangeProductName(event){
     this.QueryParams.product_name = event.detail;
   },
 
-  onChangeGoodsCurrentPrice(event){
+  onChangeProductCurrentPrice(event){
     this.QueryParams.current_cost = event.detail;
   },
 
-  onChangeGoodsOriginalPrice(event){
+  onChangeProductOriginalPrice(event){
     this.QueryParams.origin_cost = event.detail;
   },
 
-  onChangeGoodsBriefIntroduction(event){
+  onChangeProductBriefIntroduction(event){
     this.QueryParams.product_intro = event.detail;
   },
 
@@ -157,7 +158,7 @@ Page({
       if(true)
       {
         const res1 = await request({
-          url : "/ddlproduct/create",
+          url : "/ddlproduct/update",
           method : "POST",
           data:this.QueryParams,
           header:{
@@ -168,7 +169,7 @@ Page({
         console.log(this.QueryParams)
         console.log(res1);
         if(res1.data.state){
-          console.log("发布成功");
+          console.log("修改成功");
         }
       }
     }

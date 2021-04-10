@@ -6,7 +6,10 @@
     "pages/login/login",
     "pages/announcement/releaseAnnouncement",
     "pages/product/ddl_product/ddl_product",
-    "pages/product/ddl_product/create_ddl_product"
+    "pages/product/ddl_product/create_ddl_product",
+    "pages/announcement/update_announcement",
+    "pages/product/ddl_product/update_ddl_product",
+    "pages/product/forsale_product/forsale_product"
   ],
   "window": {
     "backgroundTextStyle": "light",
