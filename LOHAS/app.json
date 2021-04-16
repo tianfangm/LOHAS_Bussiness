@@ -9,7 +9,11 @@
     "pages/product/ddl_product/create_ddl_product",
     "pages/announcement/update_announcement",
     "pages/product/ddl_product/update_ddl_product",
-    "pages/product/forsale_product/forsale_product"
+    "pages/product/forsale_product/forsale_product",
+    "pages/product/blind_box/blind_box",
+    "pages/product/forsale_product/create_forsale_product",
+    "pages/product/forsale_product/update_forsale_product",
+    "pages/user/update"
   ],
   "window": {
     "backgroundTextStyle": "light",

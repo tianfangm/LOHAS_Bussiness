@@ -41,6 +41,29 @@
           "pathName": "pages/product/ddl_product/create_ddl_product",
           "query": "",
           "scene": null
+        },
+        {
+          "name": "折扣商品管理",
+          "pathName": "pages/product/forsale_product/forsale_product",
+          "query": "",
+          "scene": null
+        },
+        {
+          "name": "个人信息",
+          "pathName": "pages/user/user",
+          "query": "",
+          "scene": null
+        },
+        {
+          "name": "折扣商品管理",
+          "pathName": "pages/product/forsale_product/forsale_product",
+          "query": "",
+          "scene": null
+        },
+        {
+          "name": "发布折扣商品",
+          "pathName": "pages/product/forsale_product/create_forsale_product",
+          "scene": null
         }
       ]
     }

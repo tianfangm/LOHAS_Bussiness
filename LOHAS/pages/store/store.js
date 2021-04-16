@@ -7,12 +7,25 @@ Page({
   data: {
 
   },
-
+  // 返回参数
+  QueryParams:{
+    "avatar": "",
+    "head_picture": "",
+    "shop_address": "",
+    "shop_business_hours": "",
+    "shop_id": 0,
+    "shop_intro": "",
+    "shop_latitude": 0,
+    "shop_lohas_info": "",
+    "shop_longitude": 0,
+    "shop_name": "",
+    "shop_type": ""
+  },
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-
+    
   },
 
   /**

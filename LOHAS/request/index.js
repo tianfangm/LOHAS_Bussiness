@@ -1,5 +1,5 @@
+const baseUrl = "https://www.lohas.ink/api";
 export const request=(params)=>{
-  const baseUrl = "https://www.lohas.ink/api";
   return new Promise((resolve,reject)=>{
     wx.request({
       ...params,
@@ -15,7 +15,6 @@ export const request=(params)=>{
 }
 
 export const uploadFile=(params)=>{
-  const baseUrl = "https://www.lohas.ink/api";
   return new Promise((resolve,reject)=>{
     wx.uploadFile({
       ...params,

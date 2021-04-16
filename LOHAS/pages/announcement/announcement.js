@@ -1,5 +1,7 @@
 // pages/announcement/announcement.js
-import{request} from "../../request/index.js";
+import {
+  request
+} from "../../request/index.js";
 import regeneratorRuntime from "../../lib/runtime/runtime";
 import Dialog from '../../dist/dialog/dialog';
 
@@ -10,14 +12,14 @@ Page({
    */
   data: {
     // 公告列表
-    shop_announcements:[],
-    total_page:0
+    shop_announcements: [],
+    total_page: 0
   },
 
   // 接口要的参数
-  QueryParams:{
-    page_num:1,
-    page_size:8,
+  QueryParams: {
+    page_num: 1,
+    page_size: 8,
   },
   /**
    * 生命周期函数--监听页面加载
@@ -27,75 +29,75 @@ Page({
   },
 
   // 获取公告列表
-  async getAnnouncementList(){
+  async getAnnouncementList() {
     const Announcements = wx.getStorageSync('announcement');
-    if(!Announcements){
+    if (!Announcements) {
       // 不存在 发送请求获取数据
       this.getAnnouncement();
-    }
-    else{
+    } else {
       // 有旧的数据 判断过期时间
-      if(Date.now()-Announcements.time>1000*10){
+      if (Date.now() - Announcements.time > 1000 * 10) {
         // 重新发送请求
         this.getAnnouncement();
-      }
-      else{
+      } else {
         // 可以使用旧数据
         this.setData({
-          shop_announcements:Announcements
+          shop_announcements: Announcements
         });
       }
     }
+
+    wx-wx.stopPullDownRefresh();
   },
 
   // 获取数据
-  async getAnnouncement(){
-    try{
+  async getAnnouncement() {
+    try {
       const res = await request({
-        url:"/announcement/getmine",
-        method:"POST",
-        data:this.QueryParams,
-        header:{
-          "content-type":"application/json",
-          "token":wx.getStorageSync('token')
+        url: "/announcement/getmine",
+        method: "POST",
+        data: this.QueryParams,
+        header: {
+          "content-type": "application/json",
+          "token": wx.getStorageSync('token')
         }
       });
-      if(res.statusCode==200){
+      if (res.statusCode == 200) {
         // 把接口数据存入本地缓存
         this.setData({
           // 拼接数组
-          shop_announcements:[...this.data.shop_announcements,...res.data.shop_announcements],
-          total_page:res.data.total_page
+          shop_announcements: [...this.data.shop_announcements, ...res.data.shop_announcements],
+          total_page: res.data.total_page
         });
-        wx-wx.setStorageSync('announcement', {time:Date.now(),date:this.shop_announcements});
+        wx - wx.setStorageSync('announcement', {
+          time: Date.now(),
+          date: this.shop_announcements
+        });
       }
-    }
-    catch(error){
+    } catch (error) {
       console.log(error);
     }
   },
 
   // 删除公告
-  async deleteAnnouncement(id){
-    try{
+  async deleteAnnouncement(id) {
+    try {
       const res = await request({
-        url : "/announcement/delete",
-        method : "POST",
-        data:{
+        url: "/announcement/delete",
+        method: "POST",
+        data: {
           "announcement_id": id
         },
-        header:{
-          "content-type":"application/json",
-          "token":wx.getStorageSync('token')
+        header: {
+          "content-type": "application/json",
+          "token": wx.getStorageSync('token')
         }
       });
       console.log(res);
-      if(res.state)
-      {
+      if (res.state) {
         console.log("删除成功")
       }
-    }
-    catch(error){
+    } catch (error) {
       console.log(error);
     }
   },
@@ -131,8 +133,16 @@ Page({
   /**
    * 页面相关事件处理函数--监听用户下拉动作
    */
-  onPullDownRefresh: function () {
+  onPullDownRefresh() {
+    // 重置数组
+    this.setData({
+      shop_announcements: []
+    })
 
+    // 重置页码
+    this.QueryParams.page_num = 1;
+    // 发送请求
+    this.getAnnouncementList();
   },
 
   /**
@@ -150,45 +160,50 @@ Page({
   },
 
   /*
-  * 页面跳转
-  */
-  jumpPage:function(){
+   * 页面跳转
+   */
+  jumpPage: function () {
     wx.navigateTo({
-      url:'./releaseAnnouncement'
+      url: './releaseAnnouncement'
     })
   },
 
   /*
-  * 滚动条触底事件
-  */
-  onReachBottom(){
+   * 滚动条触底事件
+   */
+  onReachBottom() {
     console.log("页面触底");
     // 判断还有没有下一页数据
-    if(this.QueryParams.page_num<this.data.total_page){
+    if (this.QueryParams.page_num < this.data.total_page) {
       // 还有下一页
-      this.QueryParams.page_num+=1;
+      this.QueryParams.page_num += 1;
       this.getAnnouncement();
-    }
-    else{
+    } else {
       //没有下一页
-      wx-wx.showToast({title: '已经到底啦',})
+      wx - wx.showToast({
+        title: '已经到底啦',
+      })
     }
   },
 
   // 删除公告
   onClose(event) {
-    const { position, instance,name } = event.detail;
+    const {
+      position,
+      instance,
+      name
+    } = event.detail;
     switch (position) {
       case 'left':
         wx.navigateTo({
-          url: './update_announcement?a_id='+name,
+          url: './update_announcement?a_id=' + name,
         })
         instance.close();
         break;
       case 'cell':
         instance.close();
         break;
-       case 'outside':
+      case 'outside':
         instance.close();
         break;
       case 'right':
@@ -197,8 +212,8 @@ Page({
         }).then(() => {
           this.deleteAnnouncement(name);
           instance.close();
-        }).catch(()=>{
-            instance.close();
+        }).catch(() => {
+          instance.close();
         });
         break;
     }

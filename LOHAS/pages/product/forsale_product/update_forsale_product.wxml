@@ -1,0 +1,63 @@
+
+<!-- Model
+{
+  "current_cost": 0,
+  "origin_cost": 0,
+  "product_intro": "string",
+  "product_name": "string",
+  "product_pic": "string",
+} -->
+
+<view >
+  <van-cell-group>
+  <van-field
+    value="{{ product_name }}"
+    label="商品名称"
+    placeholder="请输入商品名称"
+    border="{{ false }}"
+    bind:change="onChangeForslaeProductName"
+  />
+  </van-cell-group>
+  <van-cell-group>
+  <van-field
+    value="{{ current_cost }}"
+    label="当前价格"
+    type="number"
+    placeholder="请输入当前商品价格"
+    border="{{ false }}"
+    bind:change="onChangeForslaeProductCurrentPrice"
+  />
+  </van-cell-group>
+  <van-cell-group>
+  <van-field
+    value="{{ origin_cost }}"
+    label="商品原价"
+    placeholder="请输入原商品价格"
+    border="{{ false }}"
+    bind:change="onChangeForslaeProductOriginalPrice"
+  />
+  </van-cell-group>
+  <van-cell-group>
+    <van-field
+    value="{{ product_intro }}"
+    label="商品简介"
+    type="textarea"
+    placeholder="请输入商品简介"
+    autosize
+    border="{{ false }}"
+    bind:change="onChangeForslaeProductBriefIntroduction"
+  />
+  </van-cell-group>
+  <view>
+    <van-uploader
+    file-list="{{ fileList }}"
+    max-count="1"
+    bind:after-read="afterRead"
+    accept="image"
+    />
+  </view>
+</view>
+
+<view class="bottom_btn">
+    <button class="submit_button" bindtap="updateForsaleProduct">{{submit_btn_text}}</button>
+</view>

@@ -52,6 +52,7 @@
                 </view>
                 </van-swipe-cell>
              </navigator>
+             <view class="apart"></view>
             </view>
           </scroll-view>
         </view>

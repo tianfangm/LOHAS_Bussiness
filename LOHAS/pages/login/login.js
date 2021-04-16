@@ -36,6 +36,7 @@ Page({
       });
       if(res.data.state){
         wx.setStorageSync('token', res.header.token);
+        this.getUserInfo();
         wx.switchTab({
           url: '../../pages/store/store',
         })
@@ -66,6 +67,21 @@ Page({
       password:value,
     });
     wx.setStorageSync('password', value);
+  },
+
+  // 获取商店信息
+  async getUserInfo(){
+    const res = await request({
+      url:"/shopinfo/getmine",
+      header:{
+        "content-type":"application/json",
+        "token":wx.getStorageSync('token')
+      }
+    });
+    if(res.statusCode===200){
+      wx-wx.setStorageSync('userInfo', res.data);
+      console.log(res.data);
+    }
   },
 
   /**

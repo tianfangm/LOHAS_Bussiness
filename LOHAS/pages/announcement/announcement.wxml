@@ -45,6 +45,7 @@
                 删除
                 </view>
                 </van-swipe-cell>
+                <view class="apart"></view>
              </navigator>
             </view>
           </scroll-view>

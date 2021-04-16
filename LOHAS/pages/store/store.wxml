@@ -22,14 +22,14 @@
     <van-grid-item
     icon="home-o"
     link-type="navigateTo"
-    url="/pages/product/forsale_product"
+    url="/pages/product/forsale_product/forsale_product"
     text="折扣商品管理"
   />
   <van-grid-item
     icon="search"
     link-type="navigateTo"
-    url="/pages/announcement/announcement"
-    text="商家信息管理"
+    url="/pages/product/blind_box/blind_box"
+    text="盲盒商品管理"
   />
   </van-grid>
 </view>

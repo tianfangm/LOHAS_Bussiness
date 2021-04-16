@@ -1,8 +1,6 @@
-// pages/product/ddl_product/update_ddl_product.js
+// pages/product/forsale_product/create_forsale_product.js
 import{request,uploadFile} from "../../../request/index.js";
 import regeneratorRuntime from "../../../lib/runtime/runtime";
-
-const twoYearsAgo = 365*24*3600*1000;
 
 Page({
 
@@ -10,39 +8,24 @@ Page({
    * 页面的初始数据
    */
   data: {
-    showDate:false,
-    minDate: new Date().getTime()-twoYearsAgo,
-    maxDate: new Date().getTime()+twoYearsAgo,
-    defaultDate:[new Date().getTime(),new Date().getTime()],
-    formatter(type, value) {
-      if (type === 'year') {
-        return `${value}年`;
-      } else if (type === 'month') {
-        return `${value}月`;
-      }
-      return value;
-    },
+    submit_btn_text:"发布",
 
+    fileList:[],
   },
-  
-  //参数
+
   QueryParams:{
-    "current_cost": 0,
-    "expiry_date": "",
-    "origin_cost": 0,
-    "product_id": 0,
-    "product_intro": "",
-    "product_name": "",
-    "product_pic": "",
-    "production_date": ""
+    current_cost:0,
+    origin_cost:0,
+    product_intro:"",
+    product_name:"",
+    product_pic:"",
   },
 
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-    this.QueryParams.product_id=options.ddl_product_id;
-    console.log(this.QueryParams.product_id)
+
   },
 
   /**
@@ -94,6 +77,7 @@ Page({
 
   },
 
+  // 文件上传完毕后触发afterread回调，获取对应文件的临时地址，使用wx.uploadFile将图片上传到远程服务器上
   async afterRead(event) {
     console.log(event);
     const { file } = event.detail;
@@ -111,38 +95,23 @@ Page({
     this.setData({ show: false });
   },
 
-  formatDate(date) {
-    date = new Date(date);
-    return `${date.getMonth() + 1}/${date.getDate()}`;
-  },
-
-  onConfirm(event) {
-    const [start, end] = event.detail;
-    this.setData({
-      show: false,
-      date:`生产日期：${this.formatDate(start)} 保质期至： ${this.formatDate(end)}`,
-    });
-    this.QueryParams.production_date = start;
-    this.QueryParams.expiry_date = end;
-  },
-
-  onChangeProductName(event){
+  onChangeForslaeProductName(event){
     this.QueryParams.product_name = event.detail;
   },
 
-  onChangeProductCurrentPrice(event){
+  onChangeForslaeProductCurrentPrice(event){
     this.QueryParams.current_cost = event.detail;
   },
 
-  onChangeProductOriginalPrice(event){
+  onChangeForslaeProductOriginalPrice(event){
     this.QueryParams.origin_cost = event.detail;
   },
 
-  onChangeProductBriefIntroduction(event){
+  onChangeForslaeProductBriefIntroduction(event){
     this.QueryParams.product_intro = event.detail;
   },
 
-  async createGoods(){
+  async createForslaeProduct(){
     try{
       const res = await uploadFile({
         url:"/pic/upload",
@@ -153,12 +122,13 @@ Page({
           "file":"file"
         }
       });
-      this.QueryParams.product_pic=res.data.pic_url;
-      console.log(this.QueryParams.product_pic)
+      var obj = JSON.parse(res.data)
+      console.log(obj)
+      this.QueryParams.product_pic=obj.pic_url;
       if(true)
       {
         const res1 = await request({
-          url : "/ddlproduct/update",
+          url : "/forsaleproduct/create",
           method : "POST",
           data:this.QueryParams,
           header:{
@@ -167,9 +137,9 @@ Page({
           }
         });
         console.log(this.QueryParams)
-        console.log(res1);
         if(res1.data.state){
-          console.log("修改成功");
+          console.log(res1.data)
+          console.log("发布成功");
         }
       }
     }

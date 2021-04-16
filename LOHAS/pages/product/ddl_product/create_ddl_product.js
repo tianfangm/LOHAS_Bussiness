@@ -152,8 +152,9 @@ Page({
           "file":"file"
         }
       });
-      this.QueryParams.product_pic=res.data.pic_url;
-      console.log(res)
+      var obj = JSON.parse(res.data)
+      console.log(obj)
+      this.QueryParams.product_pic=obj.pic_url;
       if(true)
       {
         const res1 = await request({
@@ -166,8 +167,8 @@ Page({
           }
         });
         console.log(this.QueryParams)
-        console.log(res1);
         if(res1.data.state){
+          console.log(res1.data)
           console.log("发布成功");
         }
       }
