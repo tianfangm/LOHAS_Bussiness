@@ -78,7 +78,7 @@ Page({
 
   jumpPage: function () {
     wx.navigateTo({
-      url: './create_ddl_product'
+      url: './update'
     })
   },
 
@@ -185,7 +185,7 @@ Page({
     switch (position) {
       case 'left':
         wx.navigateTo({
-          url: './update_ddl_product?ddl_product_id=' + name,
+          url: './update?ddl_product_id=' + name,
         })
         instance.close();
         break;

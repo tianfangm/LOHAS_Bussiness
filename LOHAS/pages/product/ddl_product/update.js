@@ -1,9 +1,8 @@
-// pages/product/ddl_product/update_ddl_product.js
+// pages/product/ddl_product/update.js
 import{request,uploadFile} from "../../../request/index.js";
 import regeneratorRuntime from "../../../lib/runtime/runtime";
 
 const twoYearsAgo = 365*24*3600*1000;
-
 Page({
 
   /**
@@ -23,26 +22,136 @@ Page({
       return value;
     },
 
-  },
-  
-  //参数
-  QueryParams:{
-    "current_cost": 0,
-    "expiry_date": "",
-    "origin_cost": 0,
-    "product_id": 0,
-    "product_intro": "",
-    "product_name": "",
-    "product_pic": "",
-    "production_date": ""
+    submit_btn_text:"发布",
   },
 
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-    this.QueryParams.product_id=options.ddl_product_id;
-    console.log(this.QueryParams.product_id)
+
+  },
+
+  // 文件上传完毕后触发afterread回调，获取对应文件的临时地址，使用wx.uploadFile将图片上传到远程服务器上
+  async afterRead(event) {
+    console.log(event);
+    const { file } = event.detail;
+    const{fileList=[]} = this.data;
+    fileList.push({url:file.url,name:"product_pic"});
+    this.setData({fileList:fileList})
+    console.log(fileList)
+  },
+
+  onDisplay() {
+    this.setData({ show: true });
+  },
+
+  onClose() {
+    this.setData({ show: false });
+  },
+
+  formatDate(date) {
+    date = new Date(date);
+    return `${date.getMonth() + 1}/${date.getDate()}`;
+  },
+
+  onConfirm(event) {
+    const [start, end] = event.detail;
+    this.setData({
+      show: false,
+      date:`生产日期：${this.formatDate(start)} 保质期至： ${this.formatDate(end)}`,
+    });
+    this.QueryParams.production_date = start;
+    this.QueryParams.expiry_date = end;
+  },
+
+  onChangeProductName(event){
+    this.QueryParams.product_name = event.detail;
+  },
+
+  onChangeProductCurrentPrice(event){
+    this.QueryParams.current_cost = event.detail;
+  },
+
+  onChangeProductOriginalPrice(event){
+    this.QueryParams.origin_cost = event.detail;
+  },
+
+  onChangeProductBriefIntroduction(event){
+    this.QueryParams.product_intro = event.detail;
+  },
+
+  async updataGoods(){
+    try{
+      const res = await uploadFile({
+        url:"/pic/upload",
+        method:"POST",
+        name:"file",
+        filePath:this.data.fileList[0].url,
+        formData:{
+          "file":"file"
+        }
+      });
+      this.QueryParams.product_pic=res.data.pic_url;
+      console.log(this.QueryParams.product_pic)
+      if(true)
+      {
+        const res1 = await request({
+          url : "/ddlproduct/update",
+          method : "POST",
+          data:this.QueryParams,
+          header:{
+            "content-type":"application/json",
+            "token":wx.getStorageSync('token')
+          }
+        });
+        console.log(this.QueryParams)
+        console.log(res1);
+        if(res1.data.state){
+          console.log("修改成功");
+        }
+      }
+    }
+    catch(error){
+      console.log(error);
+    }
+  },
+
+  async createGoods(){
+    try{
+      const res = await uploadFile({
+        url:"/pic/upload",
+        method:"POST",
+        name:"file",
+        filePath:this.data.fileList[0].url,
+        formData:{
+          "file":"file"
+        }
+      });
+      var obj = JSON.parse(res.data)
+      console.log(obj)
+      this.QueryParams.product_pic=obj.pic_url;
+      if(true)
+      {
+        const res1 = await request({
+          url : "/ddlproduct/create",
+          method : "POST",
+          data:this.QueryParams,
+          header:{
+            "content-type":"application/json",
+            "token":wx.getStorageSync('token')
+          }
+        });
+        console.log(this.QueryParams)
+        if(res1.data.state){
+          console.log(res1.data)
+          console.log("发布成功");
+        }
+      }
+    }
+    catch(error){
+      console.log(error);
+    }
   },
 
   /**
@@ -92,89 +201,5 @@ Page({
    */
   onShareAppMessage: function () {
 
-  },
-
-  async afterRead(event) {
-    console.log(event);
-    const { file } = event.detail;
-    const{fileList=[]} = this.data;
-    fileList.push({url:file.url,name:"product_pic"});
-    this.setData({fileList:fileList})
-    console.log(fileList)
-  },
-
-  onDisplay() {
-    this.setData({ show: true });
-  },
-
-  onClose() {
-    this.setData({ show: false });
-  },
-
-  formatDate(date) {
-    date = new Date(date);
-    return `${date.getMonth() + 1}/${date.getDate()}`;
-  },
-
-  onConfirm(event) {
-    const [start, end] = event.detail;
-    this.setData({
-      show: false,
-      date:`生产日期：${this.formatDate(start)} 保质期至： ${this.formatDate(end)}`,
-    });
-    this.QueryParams.production_date = start;
-    this.QueryParams.expiry_date = end;
-  },
-
-  onChangeProductName(event){
-    this.QueryParams.product_name = event.detail;
-  },
-
-  onChangeProductCurrentPrice(event){
-    this.QueryParams.current_cost = event.detail;
-  },
-
-  onChangeProductOriginalPrice(event){
-    this.QueryParams.origin_cost = event.detail;
-  },
-
-  onChangeProductBriefIntroduction(event){
-    this.QueryParams.product_intro = event.detail;
-  },
-
-  async createGoods(){
-    try{
-      const res = await uploadFile({
-        url:"/pic/upload",
-        method:"POST",
-        name:"file",
-        filePath:this.data.fileList[0].url,
-        formData:{
-          "file":"file"
-        }
-      });
-      this.QueryParams.product_pic=res.data.pic_url;
-      console.log(this.QueryParams.product_pic)
-      if(true)
-      {
-        const res1 = await request({
-          url : "/ddlproduct/update",
-          method : "POST",
-          data:this.QueryParams,
-          header:{
-            "content-type":"application/json",
-            "token":wx.getStorageSync('token')
-          }
-        });
-        console.log(this.QueryParams)
-        console.log(res1);
-        if(res1.data.state){
-          console.log("修改成功");
-        }
-      }
-    }
-    catch(error){
-      console.log(error);
-    }
-  },
+  }
 })

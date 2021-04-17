@@ -28,3 +28,17 @@ export const uploadFile=(params)=>{
     });
   })
 }
+
+export const chooseImage=(params)=>{
+  return new Promise((resolve,reject)=>{
+    wx.chooseImage({
+      ...params,
+      success:(result)=>{
+        resolve(result);
+      },
+      fail:(err)=>{
+        reject(err);
+      }
+    });
+  })
+}

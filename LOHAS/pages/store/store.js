@@ -34,6 +34,7 @@ Page({
         })
       }
     })
+    console.log(this.data.userinfo)
   },
 
   setMarkers(){

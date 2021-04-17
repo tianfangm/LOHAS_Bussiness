@@ -36,7 +36,7 @@
   <van-grid-item
     icon="search"
     link-type="navigateTo"
-    url="/pages/product/blind_box/blind_box"
+    url="/pages/product/mystery_box/mystery_box"
     text="盲盒商品管理"
   />
   </van-grid>

@@ -3,7 +3,7 @@
     <view class="flex-container">
       <button wx:if="{{!userinfo.avatar}}" class="userUnLogin" bindtap="jumpPage">未登录</button>
         <view class="UserHeadImage" wx:if="{{userinfo.avatar}}"  >
-            <image src='{{userinfo.avatar}}' />
+            <image src='{{userinfo.avatar}}' bindtap="imageClick"/>
         </view>
         <view class="UserName"  wx:if="{{userinfo.shop_name}}" >
             <view class='user-name' >{{userinfo.shop_name}}</view>
@@ -16,15 +16,15 @@
             <view >修改信息</view>
         </navigator>
         <navigator class="Trans" url="">
+            <view>我的订单</view>
+            <image class="Instru" src=""></image>
+        </navigator>
+        <navigator class="Trans" url="">
             <view>联系客服</view>
             <image class="Instru" src=""></image>
         </navigator>
         <navigator class="Trans" url="">
             <view>投诉建议</view>
-            <image class="Instru" src=""></image>
-        </navigator>
-        <navigator class="Trans" url="">
-            <view>kong</view>
             <image class="Instru" src=""></image>
         </navigator>
     </view>

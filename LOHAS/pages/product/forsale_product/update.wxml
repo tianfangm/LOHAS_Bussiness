@@ -59,5 +59,5 @@
 </view>
 
 <view class="bottom_btn">
-    <button class="submit_button" bindtap="updateForsaleProduct">{{submit_btn_text}}</button>
+    <button class="submit_button" bindtap="onBottomButtonClick">{{bottom_btn_text}}</button>
 </view>

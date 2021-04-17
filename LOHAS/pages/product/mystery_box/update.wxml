@@ -1,0 +1,43 @@
+<!--pages/product/mystery_box/update.wxml-->
+
+<van-cell-group>
+  <van-field
+    value="{{ message }}"
+    label="盲盒名称"
+    type="textarea"
+    placeholder="请输入盲盒名称"
+    autosize
+    border="{{ false }}"
+    bind:change="onChangeMysteryBoxName"
+  />
+  <van-field
+    value="{{ message }}"
+    label="盲盒简介"
+    type="textarea"
+    placeholder="请输入盲盒简介"
+    autosize
+    border="{{ false }}"
+    bind:change="onChangeMysteryBoxIntro"
+  />
+  <van-field
+    value="{{ message }}"
+    label="盲盒价格"
+    type="{{digit}}"
+    placeholder="请输入盲盒价格"
+    autosize
+    border="{{ false }}"
+    bind:change="onChangeMysteryBoxPrice"
+  />
+  <view>
+    <van-uploader
+    file-list="{{ fileList }}"
+    max-count="1"
+    bind:after-read="afterRead"
+    accept="image"
+    />
+  </view>
+</van-cell-group>
+
+<view class="bottom_btn">
+  <button class="submit_button" bindtap="onBottomBtnClick">{{bottom_button_text}}</button>
+</view>

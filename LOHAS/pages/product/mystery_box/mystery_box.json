@@ -1,0 +1,7 @@
+{
+  "usingComponents": {},
+  "navigationBarTitleText":"盲盒管理",
+  "navigationBarBackgroundColor":"#9ccd7a",
+  "enablePullDownRefresh":true,
+  "backgroundTextStyle":"dark"
+}

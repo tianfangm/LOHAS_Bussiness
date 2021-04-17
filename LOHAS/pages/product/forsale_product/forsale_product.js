@@ -86,7 +86,7 @@ Page({
 
   jumpPage: function () {
     wx.navigateTo({
-      url: './create_forsale_product'
+      url: './update'
     })
   },
   // 获取折扣商品列表
@@ -108,7 +108,7 @@ Page({
       }
     }
 
-    wx - wx.stopPullDownRefresh();
+    wx.stopPullDownRefresh();
   },
 
   // 获取折扣商品数据
@@ -132,7 +132,7 @@ Page({
         });
         wx - wx.setStorageSync('forsale_product', {
           time: Date.now(),
-          date: this.ddlproduct_item_list
+          date: this.forsaleproduct_item_list
         });
       }
     } catch (error) {
@@ -172,7 +172,7 @@ Page({
     if (this.QueryParams.page_num < this.data.total_page) {
       // 还有下一页
       this.QueryParams.page_num += 1;
-      this.getDdlProduct();
+      this.getForsaleProduct();
     } else {
       //没有下一页
       wx - wx.showToast({
@@ -191,7 +191,7 @@ Page({
     switch (position) {
       case 'left':
         wx.navigateTo({
-          url: './update_forsale_product?forsale_product_id=' + name,
+          url: './update?forsale_product_id=' + name,
         })
         instance.close();
         break;

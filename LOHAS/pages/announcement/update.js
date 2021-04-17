@@ -1,15 +1,11 @@
-import{request} from "../../request/index.js";
-import regeneratorRuntime from "../../lib/runtime/runtime";
-// pages/announcement/releaseAnnouncement.js
+// pages/announcement/update.js
 Page({
 
   /**
    * 页面的初始数据
    */
   data: {
-    value:"",
-    content:"",
-    title:""
+
   },
 
   /**
@@ -17,6 +13,37 @@ Page({
    */
   onLoad: function (options) {
 
+  },
+
+  // 获取输入标题
+  getTitle:function(e){
+    this.QueryParams.title=e.detail;
+  },
+
+  // 获取输入内容
+  getContent:function(e){
+    this.QueryParams.context=e.detail;
+
+  },
+
+  // 修改公告
+  async updateAnnouncement(){
+    console.log(this.QueryParams)
+    const res = await request({
+      url:"/announcement/update",
+      method:"POST",
+      data:this.QueryParams,
+      header:{
+        "content-type":"application/json",
+        "token":wx.getStorageSync('token')
+      },
+    });
+    console.log(res);
+    if(res.data.state){
+      wx.navigateBack({
+        delta: 1,
+      })
+    }
   },
 
   // 发布公告
@@ -45,22 +72,6 @@ Page({
     catch(error){
       console.log(error);
     }
-  },
-
-  // 获取输入标题
-  getTitle:function(e){
-    var value=e.detail;
-    this.setData({
-      title:value,
-    });
-  },
-
-  // 获取输入内容
-  getContent:function(e){
-    var value=e.detail;
-    this.setData({
-      content:value,
-    });
   },
 
   /**
@@ -94,8 +105,8 @@ Page({
   /**
    * 页面相关事件处理函数--监听用户下拉动作
    */
-  onPullDownRefresh() {
-    
+  onPullDownRefresh: function () {
+
   },
 
   /**

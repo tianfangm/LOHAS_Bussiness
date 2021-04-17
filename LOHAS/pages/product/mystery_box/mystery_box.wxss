@@ -1,0 +1,80 @@
+page{
+  height:100%;
+}
+
+.bottom_btn{
+  width:100%;
+  position:fixed;
+  bottom:0;
+}
+
+.submit_button{
+  width: 98%;
+  background-color: #9ccd7a;
+  font-size: 28rpx;
+  color: white;
+  height: 80rpx;
+  line-height: 80rpx;
+  border-radius: 10rpx;
+}
+
+.page-section-spacing{
+  margin-top: 60rpx;
+}
+
+.scroll-view_H{
+  white-space: nowrap;
+}
+
+.scroll-view-item{
+  height: 300rpx;
+}
+
+.scroll-view-item_H{
+  display: inline-block;
+  width: 100%;
+  height: 300rpx;
+}
+
+.placeholder-view {
+  width: 100%;
+  height: 150rpx;
+}
+
+
+.goods-card {
+  margin: 0;
+  background-color: white;
+}
+
+.van-swipe-cell__left{
+  display: inline-block;
+  width: 65px;
+  font-size: 15px;
+  color: #fff;
+  text-align: center;
+  background-color: rgb(29, 243, 47);
+  display: -webkit-box;
+  -webkit-box-orient: horizontal;
+  -webkit-box-pack: center;
+  -webkit-box-align: center;
+}
+
+.van-swipe-cell__right {
+  display: inline-block;
+  width: 65px;
+  font-size: 15px;
+  color: #fff;
+  text-align: center;
+  background-color: #f44;
+  display: -webkit-box;
+  -webkit-box-orient: horizontal;
+  -webkit-box-pack: center;
+  -webkit-box-align: center;
+}
+
+.apart{
+  height:2px;
+  width:100%;
+  color:#9ccd7a;
+}

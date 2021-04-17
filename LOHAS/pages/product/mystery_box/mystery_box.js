@@ -1,60 +1,65 @@
-// pages/announcement/announcement.js
+// pages/product/mystery_box/mystery_box.js
 import {
-  request
-} from "../../request/index.js";
-import regeneratorRuntime from "../../lib/runtime/runtime";
-import Dialog from '../../dist/dialog/dialog';
-
+  request,
+  uploadFile
+} from "../../../request/index.js";
+import regeneratorRuntime from "../../../lib/runtime/runtime";
+import Dialog from '../../../dist/dialog/dialog';
 Page({
 
   /**
    * 页面的初始数据
    */
   data: {
-    // 公告列表
-    shop_announcements: [],
-    total_page: 0
+    bottom_button_context: "发布盲盒",
+    mystery_boxs: [],
   },
 
-  // 接口要的参数
   QueryParams: {
     page_num: 1,
     page_size: 8,
   },
+
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-    this.getAnnouncementList();
+    this.getMysteryBoxList();
   },
 
-  // 获取公告列表
-  async getAnnouncementList() {
-    const Announcements = wx.getStorageSync('announcement');
-    if (!Announcements) {
+  jumpPage() {
+    wx.navigateTo({
+      url: './update',
+    })
+  },
+
+  // 获取盲盒列表
+  async getMysteryBoxList() {
+    const mystery_box = wx.getStorageSync('mystery_box');
+    if (!mystery_box) {
       // 不存在 发送请求获取数据
-      this.getAnnouncement();
+      this.getMysteryBox();
     } else {
       // 有旧的数据 判断过期时间
-      if (Date.now() - Announcements.time > 1000 * 10) {
+      if (Date.now() - mystery_box.time > 1000 * 10) {
         // 重新发送请求
-        this.getAnnouncement();
+        this.getMysteryBox();
       } else {
         // 可以使用旧数据
         this.setData({
-          shop_announcements: Announcements
+          mystery_boxs: mystery_box
         });
       }
     }
 
-    wx-wx.stopPullDownRefresh();
+    wx - wx.stopPullDownRefresh();
   },
 
-  // 获取数据
-  async getAnnouncement() {
+  // 获取盲盒数据
+  async getMysteryBox() {
     try {
       const res = await request({
-        url: "/announcement/getmine",
+        url: "/mysterybox/getmine",
         method: "POST",
         data: this.QueryParams,
         header: {
@@ -66,12 +71,12 @@ Page({
         // 把接口数据存入本地缓存
         this.setData({
           // 拼接数组
-          shop_announcements: [...this.data.shop_announcements, ...res.data.shop_announcements],
+          mystery_boxs: [...this.data.mystery_boxs, ...res.data.mystery_box_list],
           total_page: res.data.total_page
         });
-        wx - wx.setStorageSync('announcement', {
+        wx - wx.setStorageSync('mystery_box', {
           time: Date.now(),
-          date: this.shop_announcements
+          date: this.mystery_box_list
         });
       }
     } catch (error) {
@@ -79,14 +84,14 @@ Page({
     }
   },
 
-  // 删除公告
-  async deleteAnnouncement(id) {
+  // 删除盲盒
+  async deleteMysteryBox(id) {
     try {
       const res = await request({
-        url: "/announcement/delete",
+        url: "/mysterybox/delete",
         method: "POST",
         data: {
-          "announcement_id": id
+          "product_id": id
         },
         header: {
           "content-type": "application/json",
@@ -99,6 +104,39 @@ Page({
       }
     } catch (error) {
       console.log(error);
+    }
+  },
+
+  // 删除修改折扣商品
+  onClose(event) {
+    const {
+      position,
+      instance,
+      name
+    } = event.detail;
+    switch (position) {
+      case 'left':
+        wx.navigateTo({
+          url: './update?product_id=' + name,
+        })
+        instance.close();
+        break;
+      case 'cell':
+        instance.close();
+        break;
+      case 'outside':
+        instance.close();
+        break;
+      case 'right':
+        Dialog.confirm({
+          message: '确定删除吗？',
+        }).then(() => {
+          this.deleteMysteryBox(name);
+          instance.close();
+        }).catch(() => {
+          instance.close();
+        });
+        break;
     }
   },
 
@@ -133,51 +171,28 @@ Page({
   /**
    * 页面相关事件处理函数--监听用户下拉动作
    */
-  onPullDownRefresh() {
+  onPullDownRefresh: function () {
     // 重置数组
     this.setData({
-      shop_announcements: []
+      mystery_boxs: []
     })
 
     // 重置页码
     this.QueryParams.page_num = 1;
     // 发送请求
-    this.getAnnouncementList();
+    this.getMysteryBoxList();
   },
 
   /**
    * 页面上拉触底事件的处理函数
    */
   onReachBottom: function () {
-
-  },
-
-  /**
-   * 用户点击右上角分享
-   */
-  onShareAppMessage: function () {
-
-  },
-
-  /*
-   * 页面跳转
-   */
-  jumpPage: function () {
-    wx.navigateTo({
-      url: './update'
-    })
-  },
-
-  /*
-   * 滚动条触底事件
-   */
-  onReachBottom() {
     console.log("页面触底");
     // 判断还有没有下一页数据
     if (this.QueryParams.page_num < this.data.total_page) {
       // 还有下一页
       this.QueryParams.page_num += 1;
-      this.getAnnouncement();
+      this.getMysteryBox();
     } else {
       //没有下一页
       wx - wx.showToast({
@@ -186,36 +201,10 @@ Page({
     }
   },
 
-  // 删除公告
-  onClose(event) {
-    const {
-      position,
-      instance,
-      name
-    } = event.detail;
-    switch (position) {
-      case 'left':
-        wx.navigateTo({
-          url: './update?a_id=' + name,
-        })
-        instance.close();
-        break;
-      case 'cell':
-        instance.close();
-        break;
-      case 'outside':
-        instance.close();
-        break;
-      case 'right':
-        Dialog.confirm({
-          message: '确定删除吗？',
-        }).then(() => {
-          this.deleteAnnouncement(name);
-          instance.close();
-        }).catch(() => {
-          instance.close();
-        });
-        break;
-    }
-  },
+  /**
+   * 用户点击右上角分享
+   */
+  onShareAppMessage: function () {
+
+  }
 })

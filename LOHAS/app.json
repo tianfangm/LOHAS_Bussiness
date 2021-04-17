@@ -4,16 +4,14 @@
     "pages/announcement/announcement",
     "pages/user/user",
     "pages/login/login",
-    "pages/announcement/releaseAnnouncement",
     "pages/product/ddl_product/ddl_product",
-    "pages/product/ddl_product/create_ddl_product",
-    "pages/announcement/update_announcement",
-    "pages/product/ddl_product/update_ddl_product",
     "pages/product/forsale_product/forsale_product",
-    "pages/product/blind_box/blind_box",
-    "pages/product/forsale_product/create_forsale_product",
-    "pages/product/forsale_product/update_forsale_product",
-    "pages/user/update"
+    "pages/user/update",
+    "pages/product/mystery_box/mystery_box",
+    "pages/product/mystery_box/update",
+    "pages/product/forsale_product/update",
+    "pages/product/ddl_product/update",
+    "pages/announcement/update"
   ],
   "window": {
     "backgroundTextStyle": "light",
@@ -60,7 +58,7 @@
     ]
   },
   "sitemapLocation": "sitemap.json",
-  "style":"v2",
+  "style": "v2",
   "permission": {
     "scope.userLocation": {
       "desc": "你的位置信息将用于小程序位置接口的效果展示"

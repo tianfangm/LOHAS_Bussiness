@@ -1,4 +1,7 @@
-/* pages/announcement/releaseAnnouncement.wxss */
+page{
+  height:100%;
+}
+
 .bottom_btn{
   width:100%;
   position:fixed;
