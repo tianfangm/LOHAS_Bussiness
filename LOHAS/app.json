@@ -36,7 +36,9 @@
     "van-popup": "dist/popup/index",
     "van-cell": "dist/cell/index",
     "van-cell-group": "dist/cell-group/index",
-    "van-datetime-picker": "dist/datetime-picker/index"
+    "van-datetime-picker": "dist/datetime-picker/index",
+    "van-picker": "dist/picker/index",
+    "van-toast": "dist/toast/index"
   },
   "tabBar": {
     "color": "#a9b7b7",
@@ -57,5 +59,11 @@
       }
     ]
   },
-  "sitemapLocation": "sitemap.json"
+  "sitemapLocation": "sitemap.json",
+  "style":"v2",
+  "permission": {
+    "scope.userLocation": {
+      "desc": "你的位置信息将用于小程序位置接口的效果展示"
+    }
+  }
 }

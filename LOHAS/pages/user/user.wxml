@@ -3,7 +3,7 @@
     <view class="flex-container">
       <button wx:if="{{!userinfo.avatar}}" class="userUnLogin" bindtap="jumpPage">未登录</button>
         <view class="UserHeadImage" wx:if="{{userinfo.avatar}}"  >
-            <image src='{{userinfo.head_picture}}' />
+            <image src='{{userinfo.avatar}}' />
         </view>
         <view class="UserName"  wx:if="{{userinfo.shop_name}}" >
             <view class='user-name' >{{userinfo.shop_name}}</view>

@@ -1,8 +1,16 @@
 <!--pages/store/store.wxml-->
 <view class="container">
-  <map class="store_map"></map>
+  <map class="map" id="myMap" longitude="{{userinfo.shop_longitude}}" latitude="{{userinfo.shop_latitude}}" scale="{{scale}}" show-location='true' markers="{{markers}}">
+    <view class="upperView" style="top:{{upperViewTop}}px;height:{{upperViewHeight}}px" animation="{{ani}}">
+      <!-- 回到当前定位的图标 -->
+      <cover-view class='top_nav_c' bindtap='bindtap'>
+        <cover-image src='../../images/position.png' class='c_img'></cover-image>
+      </cover-view>
+    </view>
+  </map>
   
 </view>
+
 <view>
   <van-grid clickable column-num="2">
   <van-grid-item
