@@ -1,3 +1,8 @@
+import {
+  request,
+} from "../../request/index.js";
+import regeneratorRuntime from "../../lib/runtime/runtime";
+
 // pages/announcement/update.js
 Page({
 
@@ -5,34 +10,51 @@ Page({
    * 页面的初始数据
    */
   data: {
-
+    bottom_button_text:"发布",
+    page_type:0,
+    announcement_id:0,
+    QueryParams:{
+      "announcement_id": 0,
+      "content":"",
+      "publish_time": "",
+      "title": ""
+    },
   },
 
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-
+    if(options.announcement_id){
+      this.setData({
+        page_type:1,
+        bottom_button_text:"修改",
+        announcement_id:options.announcement_id
+      })
+      this.getAnnouncementById();
+    }
   },
 
   // 获取输入标题
   getTitle:function(e){
-    this.QueryParams.title=e.detail;
+    this.data.QueryParams.title=e.detail;
   },
 
   // 获取输入内容
   getContent:function(e){
-    this.QueryParams.context=e.detail;
-
+    this.data.QueryParams.content=e.detail;
   },
 
   // 修改公告
   async updateAnnouncement(){
-    console.log(this.QueryParams)
     const res = await request({
       url:"/announcement/update",
       method:"POST",
-      data:this.QueryParams,
+      data:{
+        "announcement_id": this.data.QueryParams.announcement_id,
+        "context": this.data.QueryParams.content,
+        "title": this.data.QueryParams.title
+      },
       header:{
         "content-type":"application/json",
         "token":wx.getStorageSync('token')
@@ -47,14 +69,14 @@ Page({
   },
 
   // 发布公告
-  async releaseAnnouncement(){
+  async createAnnouncement(){
     try{
       const res = await request({
         url : "/announcement/create",
         method : "POST",
         data:{
-          content:this.data.content,
-          title:this.data.title
+          content: this.data.QueryParams.content,
+          title: this.data.QueryParams.title
         },
         header:{
           "content-type":"application/json",
@@ -71,6 +93,39 @@ Page({
     }
     catch(error){
       console.log(error);
+    }
+  },
+
+  // 点击底部按钮
+  onBottomButtonClick(){
+    if(this.data.page_type){
+      // 修改
+      this.updateAnnouncement();
+    }else{
+      // 发布
+      this.createAnnouncement();
+    }
+  },
+
+  // 根据id获取公告
+  async getAnnouncementById(){
+    const res = await request({
+      url:"/announcement/querybyId",
+      method:"GET",
+      data:{
+        announcement_id:this.data.announcement_id
+      },
+      header:{
+        "content-type":"application/json",
+        "token":wx.getStorageSync('token')
+      }
+    });
+    console.log(res);
+    if(res.statusCode===200){
+      console.log("查询成功！")
+      this.setData({
+        QueryParams:res.data
+      });
     }
   },
 

@@ -16,6 +16,7 @@
     placeholder="请输入商品名称"
     border="{{ false }}"
     bind:change="onChangeForslaeProductName"
+    value="{{QueryParams.product_name}}"
   />
   </van-cell-group>
   <van-cell-group>
@@ -26,6 +27,7 @@
     placeholder="请输入当前商品价格"
     border="{{ false }}"
     bind:change="onChangeForslaeProductCurrentPrice"
+    value="{{QueryParams.current_cost}}"
   />
   </van-cell-group>
   <van-cell-group>
@@ -35,6 +37,7 @@
     placeholder="请输入原商品价格"
     border="{{ false }}"
     bind:change="onChangeForslaeProductOriginalPrice"
+    value="{{QueryParams.origin_cost}}"
   />
   </van-cell-group>
   <van-cell-group>
@@ -46,6 +49,7 @@
     autosize
     border="{{ false }}"
     bind:change="onChangeForslaeProductBriefIntroduction"
+    value="{{QueryParams.product_intro}}"
   />
   </van-cell-group>
   <view>
@@ -53,6 +57,7 @@
     file-list="{{ fileList }}"
     max-count="1"
     bind:after-read="afterRead"
+    bind:delete="onDeleteClick"
     accept="image"
     />
   </view>

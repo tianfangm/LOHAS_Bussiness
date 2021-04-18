@@ -13,7 +13,7 @@ Page({
     uesrinfo: [],
     submit_btn_text:"修改",
     columns: ['衣', '食', '住', '行'],
-    default_type:0
+    default_type:0,
   },
 
   /**
@@ -23,6 +23,7 @@ Page({
     const userinfo = wx.getStorageSync('userInfo');
     this.setData({
       userinfo: userinfo
+      
     })
     this.setDefaultType();
   },

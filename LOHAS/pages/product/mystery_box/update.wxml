@@ -9,6 +9,7 @@
     autosize
     border="{{ false }}"
     bind:change="onChangeMysteryBoxName"
+    value="{{QueryParams.product_name}}"
   />
   <van-field
     value="{{ message }}"
@@ -18,6 +19,7 @@
     autosize
     border="{{ false }}"
     bind:change="onChangeMysteryBoxIntro"
+    value="{{QueryParams.product_intro}}"
   />
   <van-field
     value="{{ message }}"
@@ -27,12 +29,14 @@
     autosize
     border="{{ false }}"
     bind:change="onChangeMysteryBoxPrice"
+    value="{{QueryParams.price}}"
   />
   <view>
     <van-uploader
     file-list="{{ fileList }}"
     max-count="1"
     bind:after-read="afterRead"
+    bind:delete="onDeleteClick"
     accept="image"
     />
   </view>

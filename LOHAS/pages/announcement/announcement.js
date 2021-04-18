@@ -196,7 +196,7 @@ Page({
     switch (position) {
       case 'left':
         wx.navigateTo({
-          url: './update?a_id=' + name,
+          url: './update?announcement_id=' + name,
         })
         instance.close();
         break;
