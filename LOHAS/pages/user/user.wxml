@@ -1,7 +1,7 @@
 <!--pages/first/first.wxml-->
 <view style="width: 750rpx; height: 1279rpx; display: block; box-sizing: border-box">
     <view class="user_info_wrap">
-        <view wx:if="{{userinfo.shop_name}}" class="user_img_wrap">
+        <view wx:if="{{isLogin}}" class="user_img_wrap">
             <image class="user_bg" src="{{userinfo.head_picture}}" bindtap="backgroundClick"></image>
             <view class="user_info">
                 <image class="user_icon" src="{{userinfo.avatar}}" bindtap="imageClick"></image>
@@ -12,8 +12,8 @@
             <button class="userUnLogin" bindtap="jumpPage">未登录</button>
         </view>
     </view>
-
-    <view class="Mine" wx:if="{{userinfo.avatar}}">
+    <van-divider />
+    <view class="Mine" wx:if="{{isLogin}}">
         <navigator class="Trans" url="./update">
             <view>修改信息</view>
         </navigator>

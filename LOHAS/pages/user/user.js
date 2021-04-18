@@ -10,15 +10,14 @@ Page({
    */
   data: {
     userinfo:[],
+    isLogin:false,
   },
 
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-    const userinfo = wx.getStorageSync('userInfo');
-    this.setData({userinfo})
-    console.log(userinfo)
+
   },
 
   async imageClick(){
@@ -117,7 +116,19 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
-
+    const userinfo = wx.getStorageSync('userInfo');
+    const token = wx.getStorageSync('token');
+    console.log(token)
+    if(token){
+      this.setData({
+        isLogin:true
+      });
+    }
+    this.setData({
+      userinfo:userinfo
+    });
+    console.log(userinfo)
+    
   },
 
   /**

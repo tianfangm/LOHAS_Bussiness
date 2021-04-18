@@ -39,7 +39,8 @@
     "van-datetime-picker": "dist/datetime-picker/index",
     "van-picker": "dist/picker/index",
     "van-toast": "dist/toast/index",
-    "van-divider": "dist/divider/index"
+    "van-divider": "dist/divider/index",
+    "van-icon": "dist/icon/index"
   },
   "tabBar": {
     "color": "#a9b7b7",

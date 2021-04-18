@@ -14,13 +14,13 @@
 <view>
   <van-grid clickable column-num="2">
   <van-grid-item
-    icon="home-o"
+    icon="clock-o"
     link-type="navigateTo"
     url="/pages/product/ddl_product/ddl_product"
     text="临期商品管理"
   />
   <van-grid-item
-    icon="search"
+    icon="comment-circle-o"
     link-type="navigateTo"
     url="/pages/announcement/announcement"
     text="公告管理"
@@ -28,19 +28,19 @@
   </van-grid>
   <van-grid clickable column-num="2">
     <van-grid-item
-    icon="home-o"
+    icon="hot-o"
     link-type="navigateTo"
     url="/pages/product/forsale_product/forsale_product"
     text="折扣商品管理"
   />
   <van-grid-item
-    icon="search"
+    icon="gift-o"
     link-type="navigateTo"
     url="/pages/product/mystery_box/mystery_box"
     text="盲盒商品管理"
   />
   <van-grid-item
-    icon="search"
+    icon="orders-o"
     link-type="navigateTo"
     url="/pages/order/order"
     text="盲盒订单管理"

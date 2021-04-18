@@ -12,7 +12,18 @@ Page({
    */
   data: {
     show_type:false,
-    uesrinfo: [],
+    userinfo:{
+      avatar: "",
+      head_picture: "",
+      shop_address: "",
+      shop_business_hours: "",
+      shop_intro: "",
+      shop_latitude: 0,
+      shop_lohas_info: "",
+      shop_longitude: 0,
+      shop_name: "",
+      shop_type: ""
+    },
     submit_btn_text:"修改",
     columns: ['衣', '食', '住', '行'],
     default_type:0,
@@ -23,11 +34,12 @@ Page({
    */
   onLoad: function (options) {
     const userinfo = wx.getStorageSync('userInfo');
-    this.setData({
-      userinfo: userinfo
-      
-    })
-    this.setDefaultType();
+    if(userinfo.shop_id){
+      this.setData({
+        userinfo: userinfo
+      })
+      this.setDefaultType();
+    }
   },
 
   async updateInfo(){
@@ -59,6 +71,7 @@ Page({
   },
 
   onConfirm(event) {
+    this.setData({ show_type: false });
     const { picker, value, index } = event.detail;
     Toast(`当前值：${value}, 当前索引：${index}`);
     var type = "";
@@ -80,7 +93,6 @@ Page({
         break;
     }
     this.data.userinfo.shop_type = type;
-    this.setData({ show_type: false });
   },
 
   onCancel() {
@@ -93,7 +105,7 @@ Page({
   },
 
   onCHangeShopIntro(event){
-    this.data.uesrinfo.shop_intro=event.detail;
+    this.data.userinfo.shop_intro=event.detail;
   },
 
   onChangeShopLOHASInfo(event){
