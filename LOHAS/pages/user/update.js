@@ -3,6 +3,8 @@ import{request} from "../../request/index.js";
 import regeneratorRuntime from "../../lib/runtime/runtime";
 import Toast from '../../dist/toast/toast';
 
+const chooseLocation = requirePlugin('chooseLocation');
+
 Page({
 
   /**
@@ -39,7 +41,7 @@ Page({
       }
     });
     if(res.data.state){
-      console.log("修改成功！！！");
+      console.log("修改信息成功！！！");
       wx.removeStorageSync('userInfo');
       wx.setStorageSync('userInfo', this.data.userinfo)
       wx.navigateBack({
@@ -78,10 +80,12 @@ Page({
         break;
     }
     this.data.userinfo.shop_type = type;
+    this.setData({ show_type: false });
   },
 
   onCancel() {
     Toast('取消');
+    this.setData({ show_type: false });
   },
 
   onChangeShopName(event){
@@ -123,6 +127,20 @@ Page({
     })
   },
 
+  onChooseLocation(){
+    const key = 'YWWBZ-K7QKD-HHG4G-HD3AP-RJRHS-HHFEN'; //使用在腾讯位置服务申请的key
+    const referer = 'LOHAS'; //调用插件的app的名称
+    const location = JSON.stringify({
+      latitude: 39.89631551,
+      longitude: 116.323459711
+    });
+    const category = '生活服务,娱乐休闲';   
+
+    wx.navigateTo({
+      url: 'plugin://chooseLocation/index?key=' + key + '&referer=' + referer + '&location=' + location + '&category=' + category
+    });
+  },
+
   /**
    * 生命周期函数--监听页面初次渲染完成
    */
@@ -134,7 +152,13 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
-
+    const location = chooseLocation.getLocation();
+    if(location!=null){
+      this.data.userinfo.shop_latitude = location.latitude;
+      this.data.userinfo.shop_longitude = location.longitude;
+      this.data.userinfo.shop_address = location.address;
+      console.log(this.data.userinfo);
+    }
   },
 
   /**
@@ -148,7 +172,7 @@ Page({
    * 生命周期函数--监听页面卸载
    */
   onUnload: function () {
-
+    chooseLocation.setLocation(null);
   },
 
   /**

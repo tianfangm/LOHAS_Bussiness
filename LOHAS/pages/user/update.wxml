@@ -2,17 +2,20 @@
 <!--暂不支持经纬度和头像背景修改-->
 <view class="update-info">
   <van-cell-group>
-    <van-field value="{{ message }}" label="店铺名称" type="textarea" placeholder="请输入店铺名称" value="{{userinfo.shop_name}}" autosize border="{{ false }}" bind:change="onChangeShopName"/>
-    <van-field value="{{ message }}" label="店铺简介" type="textarea" placeholder="请输入店铺简介" value="{{userinfo.shop_intro}}"  autosize border="{{ false }}" bind:change="onCHangeShopIntro"/>
-    <van-field value="{{ message }}" label="lohas介绍" type="textarea" placeholder="请输入店铺lohas介绍" value="{{userinfo.shop_lohas_info}}"  autosize border="{{ false }}" bind:change="onChangeShopLOHASInfo"/>
-    <van-field value="{{ message }}" label="店铺地址" type="textarea" placeholder="请输入店铺地址" value="{{userinfo.shop_address}}"  autosize border="{{ false }}" bind:change="onChangeShopAddress"/>
+    <van-field value="{{ message }}" label="店铺名称" type="textarea" placeholder="请输入店铺名称" value="{{userinfo.shop_name}}" autosize border="{{ false }}" bind:change="onChangeShopName" clearable/>
+    <van-field value="{{ message }}" label="店铺简介" type="textarea" placeholder="请输入店铺简介" value="{{userinfo.shop_intro}}"  autosize border="{{ false }}" bind:change="onCHangeShopIntro" clearable/>
+    <van-field value="{{ message }}" label="lohas介绍" type="textarea" placeholder="请输入店铺lohas介绍" value="{{userinfo.shop_lohas_info}}"  autosize border="{{ false }}" bind:change="onChangeShopLOHASInfo" clearable/>
+    <van-field value="{{ message }}" label="店铺地址" type="textarea" placeholder="请输入店铺地址" value="{{userinfo.shop_address}}"  autosize border="{{ false }}" bind:change="onChangeShopAddress"clearable/>
     <van-cell title="店铺类型" is-link bind:click="showPopup" />
-    <van-field value="{{ message }}" label="店铺营业时间" placeholder="请输入店铺营业时间" value="{{userinfo.shop_business_hours}}"  autosize border="{{ false }}" bind:change="onChangeShopBusinessTime"/>
+    <van-field value="{{ message }}" label="店铺营业时间" placeholder="请输入店铺营业时间" value="{{userinfo.shop_business_hours}}"  autosize border="{{ false }}" bind:change="onChangeShopBusinessTime" clearable/>
+    <van-button size="big" type="primary" bind:click="onChooseLocation">
+      选择店铺位置
+    </van-button>
   </van-cell-group>
 </view>
 
 <van-popup show="{{ show_type }}" round position="bottom" custom-style="height: 60%" bind:close="onClose">
-  <van-picker show-toolbar title="商店类型" columns="{{ columns }}" bind:cancel="onCancel" bind:confirm="onConfirm" default-index="{{default_type}}"/>
+  <van-picker show-toolbar title="店铺类型" columns="{{ columns }}" bind:cancel="onCancel" bind:confirm="onConfirm" default-index="{{default_type}}"/>
 </van-popup>
 <van-toast id="van-toast" />
 <view class="bottom_btn">

@@ -38,7 +38,8 @@
     "van-cell-group": "dist/cell-group/index",
     "van-datetime-picker": "dist/datetime-picker/index",
     "van-picker": "dist/picker/index",
-    "van-toast": "dist/toast/index"
+    "van-toast": "dist/toast/index",
+    "van-divider": "dist/divider/index"
   },
   "tabBar": {
     "color": "#a9b7b7",
@@ -63,7 +64,13 @@
   "style": "v2",
   "permission": {
     "scope.userLocation": {
-      "desc": "你的位置信息将用于小程序位置接口的效果展示"
+      "desc": "你的位置信息将用于小程序定位"
     }
-  }
+  },
+  "plugins": {
+    "chooseLocation": {
+    "version": "1.0.5",
+    "provider": "wx76a9a06e5b4e693e"
+    }
+}
 }
