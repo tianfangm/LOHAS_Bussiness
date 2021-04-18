@@ -1,0 +1,46 @@
+<view>
+  <view class="container"> 
+    <view class="card-body">
+      <view class="page-section">
+        <view class="page-section-title">
+        </view>
+        <view class="page-section-spacing">
+          <scroll-view scroll-y="true" bindscrolltoupper="upper" bindscrolltolower="lower" bindscroll="scroll" scroll-into-view="{{toView}}" scroll-top="{{scrollTop}}">
+            <view 
+            class="menu_item" 
+            wx:for="{{orders}}"
+            wx:for-index="index"
+            wx:for-item="item"
+            wx:key="order_id"
+            >
+             <navigator>
+              <van-swipe-cell
+              id="swipe-cell"
+              name="{{item.order_id}}"
+              async-close
+              bind:close="onClose"
+              >
+                <van-card
+                thumb="{{item.product_pic}}"
+                title="{{item.product_name}}"
+                class="mysterybox-order-card"
+                >
+                  <view slot="footer">
+                    <label>订单日期：{{item.order_time}}</label>
+                  </view>
+                </van-card>
+                </van-swipe-cell>
+             </navigator>
+             <view class="apart"></view>
+            </view>
+          </scroll-view>
+        </view>
+      </view>
+    </view>
+  </view>
+</view>
+<view class='placeholder-view'></view>
+<van-dialog id="van-dialog" />
+<view class="bottom_btn">
+    <button class="submit_button" bindtap="jumpPage">确认订单</button>
+</view>

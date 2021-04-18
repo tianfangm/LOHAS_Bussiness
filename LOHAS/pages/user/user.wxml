@@ -15,8 +15,8 @@
         <navigator class="Trans" url="./update">
             <view >修改信息</view>
         </navigator>
-        <navigator class="Trans" url="">
-            <view>我的订单</view>
+        <navigator class="Trans" url="./order">
+            <view>我的</view>
             <image class="Instru" src=""></image>
         </navigator>
         <navigator class="Trans" url="">

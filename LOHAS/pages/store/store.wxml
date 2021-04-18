@@ -39,5 +39,11 @@
     url="/pages/product/mystery_box/mystery_box"
     text="盲盒商品管理"
   />
+  <van-grid-item
+    icon="search"
+    link-type="navigateTo"
+    url="/pages/order/order"
+    text="盲盒订单管理"
+  />
   </van-grid>
 </view>

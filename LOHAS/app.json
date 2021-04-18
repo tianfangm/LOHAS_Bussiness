@@ -11,7 +11,9 @@
     "pages/product/mystery_box/update",
     "pages/product/forsale_product/update",
     "pages/product/ddl_product/update",
-    "pages/announcement/update"
+    "pages/announcement/update",
+    "pages/order/order",
+    "pages/order/confirm"
   ],
   "window": {
     "backgroundTextStyle": "light",

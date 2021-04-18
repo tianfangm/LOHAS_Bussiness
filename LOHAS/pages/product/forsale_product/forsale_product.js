@@ -89,6 +89,7 @@ Page({
       url: './update'
     })
   },
+
   // 获取折扣商品列表
   async getForsaleProductList() {
     const forsale_product = wx.getStorageSync('forsale_product');
@@ -132,7 +133,7 @@ Page({
         });
         wx - wx.setStorageSync('forsale_product', {
           time: Date.now(),
-          date: this.forsaleproduct_item_list
+          data: this.forsaleproduct_item_list
         });
       }
     } catch (error) {

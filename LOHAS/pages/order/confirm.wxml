@@ -1,0 +1,10 @@
+<!--pages/order/confirm.wxml-->
+<view>
+  <text>请输入确认码</text>
+  <van-cell-group>
+    <van-field value="{{ value }}" placeholder="请输入确认码" border="{{ false }}" bind:change="onChangeConfirmCode" />
+  </van-cell-group>
+</view>
+<view class="bottom_btn">
+    <button class="submit_button" bindtap="confirmOrder">确认订单</button>
+</view>
