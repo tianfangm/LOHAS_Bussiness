@@ -100,10 +100,6 @@ Page({
     this.data.userinfo.shop_lohas_info=event.detail;
   },
 
-  onChangeShopAddress(event){
-    this.data.userinfo.shop_address=event.detail;
-  },
-
   onChangeShopBusinessTime(event){
     this.data.userinfo.shop_business_hours=event.detail;
   },
