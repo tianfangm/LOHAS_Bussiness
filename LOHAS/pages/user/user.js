@@ -132,7 +132,6 @@ Page({
   onShow: function () {
     const userinfo = wx.getStorageSync('userInfo');
     const token = wx.getStorageSync('token');
-    console.log(token)
     if (token) {
       this.setData({
         isLogin: true
