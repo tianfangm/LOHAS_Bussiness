@@ -40,7 +40,8 @@
     "van-picker": "dist/picker/index",
     "van-toast": "dist/toast/index",
     "van-divider": "dist/divider/index",
-    "van-icon": "dist/icon/index"
+    "van-icon": "dist/icon/index",
+    "van-image": "dist/image/index"
   },
   "tabBar": {
     "color": "#a9b7b7",
@@ -54,8 +55,8 @@
         "text": "我的店铺"
       },
       {
-        "selectedIconPath": "images/icon_home_page.png",
-        "iconPath": "images/icon_home_page.png",
+        "selectedIconPath": "images/icon_user.png",
+        "iconPath": "images/icon_user.png",
         "pagePath": "pages/user/user",
         "text": "我的信息"
       }

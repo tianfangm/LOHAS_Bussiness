@@ -1,6 +1,10 @@
 // pages/user/user.js
 
-import{request,uploadFile,chooseImage} from "../../request/index.js";
+import {
+  request,
+  uploadFile,
+  chooseImage
+} from "../../request/index.js";
 import regeneratorRuntime from "../../lib/runtime/runtime";
 
 Page({
@@ -9,8 +13,20 @@ Page({
    * 页面的初始数据
    */
   data: {
-    userinfo:[],
-    isLogin:false,
+    show_type: false,
+    userinfo: {
+      avatar: "",
+      head_picture: "",
+      shop_address: "",
+      shop_business_hours: "",
+      shop_intro: "",
+      shop_latitude: 0,
+      shop_lohas_info: "",
+      shop_longitude: 0,
+      shop_name: "",
+      shop_type: ""
+    },
+    isLogin: false,
   },
 
   /**
@@ -20,86 +36,84 @@ Page({
 
   },
 
-  async imageClick(){
+  async imageClick() {
     var that = this;
     const res = await chooseImage({
       count: 1, // 默认9
       sizeType: ['original', 'compressed'], // 可以指定是原图还是压缩图，默认二者都有
       sourceType: ['album', 'camera'],
     });
-    if(res){
+    if (res) {
       const res1 = await uploadFile({
-        url:"/pic/upload",
-        method:"POST",
-        name:"file",
-        filePath:res.tempFilePaths[0],
-        formData:{
-          "file":"file"
+        url: "/pic/upload",
+        method: "POST",
+        name: "file",
+        filePath: res.tempFilePaths[0],
+        formData: {
+          "file": "file"
         }
       });
       var obj = JSON.parse(res1.data);
-
-      if(obj.status==="done"){
+      console.log(this.data.userinfo)
+      if (obj.status === "done") {
         this.data.userinfo.avatar = obj.pic_url;
         console.log(this.data.userinfo.avatar)
-        const res2=await request({
-          url:"/shopinfo/update",
-          method : "POST",
-          data:this.data.userinfo,
-          header:{
+        const res2 = await request({
+          url: "/shopinfo/update",
+          method: "POST",
+          data: this.data.userinfo,
+          header: {
             "content-type": "application/json",
             "token": wx.getStorageSync('token')
           }
         });
-        if(res2.data.state){
+        if (res2.data.state) {
           console.log("修改头像成功！！！");
           wx.removeStorageSync('userInfo');
           wx.setStorageSync('userInfo', this.data.userinfo);
         }
-      }
-      else{
+      } else {
         console.log("修改失败");
       }
     }
   },
 
-  async backgroundClick(){
+  async backgroundClick() {
     var that = this;
     const res = await chooseImage({
       count: 1, // 默认9
       sizeType: ['original', 'compressed'], // 可以指定是原图还是压缩图，默认二者都有
       sourceType: ['album', 'camera'],
     });
-    if(res){
+    if (res) {
       const res1 = await uploadFile({
-        url:"/pic/upload",
-        method:"POST",
-        name:"file",
-        filePath:res.tempFilePaths[0],
-        formData:{
-          "file":"file"
+        url: "/pic/upload",
+        method: "POST",
+        name: "file",
+        filePath: res.tempFilePaths[0],
+        formData: {
+          "file": "file"
         }
       });
       var obj = JSON.parse(res1.data);
 
-      if(obj.status==="done"){
+      if (obj.status === "done") {
         this.data.userinfo.head_picture = obj.pic_url;
-        const res2=await request({
-          url:"/shopinfo/update",
-          method : "POST",
-          data:this.data.userinfo,
-          header:{
+        const res2 = await request({
+          url: "/shopinfo/update",
+          method: "POST",
+          data: this.data.userinfo,
+          header: {
             "content-type": "application/json",
             "token": wx.getStorageSync('token')
           }
         });
-        if(res2.data.state){
+        if (res2.data.state) {
           console.log("修改背景成功！！！");
           wx.removeStorageSync('userInfo');
           wx.setStorageSync('userInfo', this.data.userinfo);
         }
-      }
-      else{
+      } else {
         console.log("修改失败");
       }
     }
@@ -119,16 +133,16 @@ Page({
     const userinfo = wx.getStorageSync('userInfo');
     const token = wx.getStorageSync('token');
     console.log(token)
-    if(token){
+    if (token) {
       this.setData({
-        isLogin:true
+        isLogin: true
       });
     }
-    this.setData({
-      userinfo:userinfo
-    });
-    console.log(userinfo)
-    
+    if(userinfo.avatar){
+      this.setData({
+        userinfo: userinfo
+      });
+    }
   },
 
   /**
@@ -166,7 +180,7 @@ Page({
 
   },
 
-  jumpPage(){
+  jumpPage() {
     wx.navigateTo({
       url: '../login/login',
     })
