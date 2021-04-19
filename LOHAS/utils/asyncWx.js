@@ -1,6 +1,7 @@
 /**
  * promise 形式 showModal
  */
+const baseUrl = "https://www.lohas.ink/api";
 export const showModal = (params)=>{
   return new Promise((resolve,reject)=>{
     wx.showModal({
