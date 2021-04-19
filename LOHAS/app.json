@@ -41,7 +41,8 @@
     "van-toast": "dist/toast/index",
     "van-divider": "dist/divider/index",
     "van-icon": "dist/icon/index",
-    "van-image": "dist/image/index"
+    "van-image": "dist/image/index",
+    "van-submit-bar": "dist/submit-bar/index"
   },
   "tabBar": {
     "color": "#a9b7b7",

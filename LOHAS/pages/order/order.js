@@ -1,10 +1,10 @@
 // pages/order/order.js
 import {
   request,
-  uploadFile
 } from "../../request/index.js";
 import regeneratorRuntime from "../../lib/runtime/runtime";
 import Dialog from '../../dist/dialog/dialog';
+import { uploadFile } from '../../utils/asyncWx.js'
 
 Page({
 
@@ -13,7 +13,7 @@ Page({
    */
   data: {
     orders:[],
-
+    total_page:0,
   },
 
   QueryParams: {
@@ -94,6 +94,10 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
+    this.setData({
+      orders:[],
+      total_page:0
+    })
     this.getOrderList();
   },
 

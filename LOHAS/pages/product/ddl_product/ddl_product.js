@@ -3,6 +3,9 @@ import {
 } from "../../../request/index.js";
 import regeneratorRuntime from "../../../lib/runtime/runtime";
 import Dialog from '../../../dist/dialog/dialog';
+import {
+  showModal
+} from "../../../utils/asyncWx.js"
 
 Page({
 
@@ -11,6 +14,7 @@ Page({
    */
   data: {
     ddl_products: [],
+    total_page:0,
   },
 
   // 接口要的参数
@@ -23,7 +27,7 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-    
+
   },
 
   /**
@@ -37,6 +41,9 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
+    this.setData({
+      ddl_products: [],
+    })
     this.getDdlProductList();
   },
 
@@ -44,14 +51,14 @@ Page({
    * 生命周期函数--监听页面隐藏
    */
   onHide: function () {
-    
+
   },
 
   /**
    * 生命周期函数--监听页面卸载
    */
   onUnload: function () {
-    
+
   },
 
   /**
@@ -60,7 +67,8 @@ Page({
   onPullDownRefresh() {
     // 重置数组
     this.setData({
-      ddl_products:[]
+      ddl_products: [],
+      total_page:0,
     })
 
     // 重置页码
@@ -102,7 +110,7 @@ Page({
     }
 
     // 关闭下拉刷新窗口
-    wx-wx.stopPullDownRefresh();
+    wx - wx.stopPullDownRefresh();
   },
 
   // 获取临期商品数据
@@ -160,7 +168,7 @@ Page({
   /*
    * 滚动条触底事件
    */
-  onReachBottom(){
+  onReachBottom() {
     console.log("页面触底");
     // 判断还有没有下一页数据
     if (this.QueryParams.page_num < this.data.total_page) {
@@ -176,35 +184,42 @@ Page({
   },
 
   // 删除修改临期商品
-  onClose(event) {
-    const {
-      position,
-      instance,
-      name
-    } = event.detail;
-    switch (position) {
-      case 'left':
-        wx.navigateTo({
-          url: './update?ddl_product_id=' + name,
-        })
-        instance.close();
-        break;
-      case 'cell':
-        instance.close();
-        break;
-      case 'outside':
-        instance.close();
-        break;
-      case 'right':
-        Dialog.confirm({
-          message: '确定删除吗？',
-        }).then(() => {
-          this.deleteDdlProduct(name);
+  async onClose(event) {
+    try {
+      const {
+        position,
+        instance,
+        name
+      } = event.detail;
+      switch (position) {
+        case 'left':
+          wx.navigateTo({
+            url: './update?ddl_product_id=' + name,
+          })
           instance.close();
-        }).catch(() => {
+          break;
+        case 'cell':
           instance.close();
-        });
-        break;
+          break;
+        case 'outside':
+          instance.close();
+          break;
+        case 'right':
+          const res = await showModal({
+            title: "删除临期商品",
+            content: "您是否要删除",
+            confirmColor: "#d81e06"
+          })
+          if (res.confirm) {
+            this.deleteDdlProduct(name);
+            instance.close();
+          } else if (res.cancel) {
+            instance.close();
+          }
+          break;
+      }
+    } catch (error) {
+      console.log(error);
     }
   },
 })

@@ -1,11 +1,14 @@
 // pages/user/user.js
 
 import {
-  request,
-  uploadFile,
-  chooseImage
+  request
 } from "../../request/index.js";
 import regeneratorRuntime from "../../lib/runtime/runtime";
+import {
+  showToast,
+  uploadFile,
+  chooseImage
+} from '../../utils/asyncWx.js'
 
 Page({
 
@@ -37,85 +40,93 @@ Page({
   },
 
   async imageClick() {
-    var that = this;
-    const res = await chooseImage({
-      count: 1, // 默认9
-      sizeType: ['original', 'compressed'], // 可以指定是原图还是压缩图，默认二者都有
-      sourceType: ['album', 'camera'],
-    });
-    if (res) {
-      const res1 = await uploadFile({
-        url: "/pic/upload",
-        method: "POST",
-        name: "file",
-        filePath: res.tempFilePaths[0],
-        formData: {
-          "file": "file"
-        }
+    try {
+      var that = this;
+      const res = await chooseImage({
+        count: 1, // 默认9
+        sizeType: ['original', 'compressed'], // 可以指定是原图还是压缩图，默认二者都有
+        sourceType: ['album', 'camera'],
       });
-      var obj = JSON.parse(res1.data);
-      console.log(this.data.userinfo)
-      if (obj.status === "done") {
-        this.data.userinfo.avatar = obj.pic_url;
-        console.log(this.data.userinfo.avatar)
-        const res2 = await request({
-          url: "/shopinfo/update",
+      if (res) {
+        const res1 = await uploadFile({
+          url: "/pic/upload",
           method: "POST",
-          data: this.data.userinfo,
-          header: {
-            "content-type": "application/json",
-            "token": wx.getStorageSync('token')
+          name: "file",
+          filePath: res.tempFilePaths[0],
+          formData: {
+            "file": "file"
           }
         });
-        if (res2.data.state) {
-          console.log("修改头像成功！！！");
-          wx.removeStorageSync('userInfo');
-          wx.setStorageSync('userInfo', this.data.userinfo);
+        var obj = JSON.parse(res1.data);
+        console.log(this.data.userinfo)
+        if (obj.status === "done") {
+          this.data.userinfo.avatar = obj.pic_url;
+          console.log(this.data.userinfo.avatar)
+          const res2 = await request({
+            url: "/shopinfo/update",
+            method: "POST",
+            data: this.data.userinfo,
+            header: {
+              "content-type": "application/json",
+              "token": wx.getStorageSync('token')
+            }
+          });
+          if (res2.data.state) {
+            console.log("修改头像成功！！！");
+            wx.removeStorageSync('userInfo');
+            wx.setStorageSync('userInfo', this.data.userinfo);
+          }
+        } else {
+          console.log("修改失败");
         }
-      } else {
-        console.log("修改失败");
       }
+    } catch (error) {
+      console.log(error);
     }
   },
 
   async backgroundClick() {
-    var that = this;
-    const res = await chooseImage({
-      count: 1, // 默认9
-      sizeType: ['original', 'compressed'], // 可以指定是原图还是压缩图，默认二者都有
-      sourceType: ['album', 'camera'],
-    });
-    if (res) {
-      const res1 = await uploadFile({
-        url: "/pic/upload",
-        method: "POST",
-        name: "file",
-        filePath: res.tempFilePaths[0],
-        formData: {
-          "file": "file"
-        }
+    try {
+      var that = this;
+      const res = await chooseImage({
+        count: 1, // 默认9
+        sizeType: ['original', 'compressed'], // 可以指定是原图还是压缩图，默认二者都有
+        sourceType: ['album', 'camera'],
       });
-      var obj = JSON.parse(res1.data);
-
-      if (obj.status === "done") {
-        this.data.userinfo.head_picture = obj.pic_url;
-        const res2 = await request({
-          url: "/shopinfo/update",
+      if (res) {
+        const res1 = await uploadFile({
+          url: "/pic/upload",
           method: "POST",
-          data: this.data.userinfo,
-          header: {
-            "content-type": "application/json",
-            "token": wx.getStorageSync('token')
+          name: "file",
+          filePath: res.tempFilePaths[0],
+          formData: {
+            "file": "file"
           }
         });
-        if (res2.data.state) {
-          console.log("修改背景成功！！！");
-          wx.removeStorageSync('userInfo');
-          wx.setStorageSync('userInfo', this.data.userinfo);
+        var obj = JSON.parse(res1.data);
+
+        if (obj.status === "done") {
+          this.data.userinfo.head_picture = obj.pic_url;
+          const res2 = await request({
+            url: "/shopinfo/update",
+            method: "POST",
+            data: this.data.userinfo,
+            header: {
+              "content-type": "application/json",
+              "token": wx.getStorageSync('token')
+            }
+          });
+          if (res2.data.state) {
+            console.log("修改背景成功！！！");
+            wx.removeStorageSync('userInfo');
+            wx.setStorageSync('userInfo', this.data.userinfo);
+          }
+        } else {
+          console.log("修改失败");
         }
-      } else {
-        console.log("修改失败");
       }
+    } catch (error) {
+      console.log(error);
     }
   },
 
@@ -137,7 +148,7 @@ Page({
         isLogin: true
       });
     }
-    if(userinfo.avatar){
+    if (userinfo.avatar) {
       this.setData({
         userinfo: userinfo
       });
@@ -182,6 +193,14 @@ Page({
   jumpPage() {
     wx.navigateTo({
       url: '../login/login',
+    })
+  },
+
+  async onSuggestionClick(){
+    const res = await showToast({
+      title: '功能即将上线！',
+      icon: 'success',
+      duration: 1000
     })
   }
 })

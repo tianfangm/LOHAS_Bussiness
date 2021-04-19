@@ -1,9 +1,9 @@
 // pages/product/forsale_product/update.js
 import {
   request,
-  uploadFile
 } from "../../../request/index.js";
 import regeneratorRuntime from "../../../lib/runtime/runtime";
+import { uploadFile } from '../../../utils/asyncWx.js'
 Page({
 
   /**
@@ -180,30 +180,35 @@ Page({
 
   // 通过id查询折扣商品详细信息
   async getForsaleProductById() {
-    const res = await request({
-      url: "/forsaleproduct/querybyId",
-      method: "GET",
-      data: {
-        product_id: this.data.QueryParams.product_id
-      },
-      header: {
-        "content-type": "application/json",
-        "token": wx.getStorageSync('token')
-      }
-    });
-    console.log(res)
-    if (res.statusCode === 200) {
-      // 查询成功
-      this.setData({
-        QueryParams: res.data,
-        fileList: [{
-          url: res.data.product_pic,
-          name: '预加载图片'
-        }]
+    try{
+      const res = await request({
+        url: "/forsaleproduct/querybyId",
+        method: "GET",
+        data: {
+          product_id: this.data.QueryParams.product_id
+        },
+        header: {
+          "content-type": "application/json",
+          "token": wx.getStorageSync('token')
+        }
       });
-      console.log("查询成功！");
-    } else {
-      console.log("查询失败！！！")
+      console.log(res)
+      if (res.statusCode === 200) {
+        // 查询成功
+        this.setData({
+          QueryParams: res.data,
+          fileList: [{
+            url: res.data.product_pic,
+            name: '预加载图片'
+          }]
+        });
+        console.log("查询成功！");
+      } else {
+        console.log("查询失败！！！")
+      }
+    }
+    catch(error){
+      console.log(error)
     }
   },
 

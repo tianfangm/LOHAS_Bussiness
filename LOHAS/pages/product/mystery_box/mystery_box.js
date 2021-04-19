@@ -1,10 +1,11 @@
 // pages/product/mystery_box/mystery_box.js
 import {
   request,
-  uploadFile
 } from "../../../request/index.js";
 import regeneratorRuntime from "../../../lib/runtime/runtime";
-import Dialog from '../../../dist/dialog/dialog';
+import {
+  showModal
+} from "../../../utils/asyncWx.js"
 Page({
 
   /**
@@ -13,6 +14,7 @@ Page({
   data: {
     bottom_button_context: "发布盲盒",
     mystery_boxs: [],
+    total_page:0,
   },
 
   QueryParams: {
@@ -24,7 +26,7 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-    
+
   },
 
   jumpPage() {
@@ -108,35 +110,42 @@ Page({
   },
 
   // 删除修改折扣商品
-  onClose(event) {
-    const {
-      position,
-      instance,
-      name
-    } = event.detail;
-    switch (position) {
-      case 'left':
-        wx.navigateTo({
-          url: './update?product_id=' + name,
-        })
-        instance.close();
-        break;
-      case 'cell':
-        instance.close();
-        break;
-      case 'outside':
-        instance.close();
-        break;
-      case 'right':
-        Dialog.confirm({
-          message: '确定删除吗？',
-        }).then(() => {
-          this.deleteMysteryBox(name);
+  async onClose(event) {
+    try {
+      const {
+        position,
+        instance,
+        name
+      } = event.detail;
+      switch (position) {
+        case 'left':
+          wx.navigateTo({
+            url: './update?product_id=' + name,
+          })
           instance.close();
-        }).catch(() => {
+          break;
+        case 'cell':
           instance.close();
-        });
-        break;
+          break;
+        case 'outside':
+          instance.close();
+          break;
+        case 'right':
+          const res = await showModal({
+            title: "删除折扣商品",
+            content: "您是否要删除",
+            confirmColor: "#d81e06"
+          })
+          if (res.confirm) {
+            this.deleteMysteryBox(name);
+            instance.close();
+          } else if (res.cancel) {
+            instance.close();
+          }
+          break;
+      }
+    } catch (error) {
+      console.log(error);
     }
   },
 
@@ -151,6 +160,10 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
+    this.setData({
+      mystery_boxs: [],
+      total_page:0
+    })
     this.getMysteryBoxList();
   },
 

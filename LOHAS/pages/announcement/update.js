@@ -2,6 +2,7 @@ import {
   request,
 } from "../../request/index.js";
 import regeneratorRuntime from "../../lib/runtime/runtime";
+import {showToast} from '../../utils/asyncWx.js'
 
 // pages/announcement/update.js
 Page({
@@ -62,9 +63,13 @@ Page({
     });
     console.log(res);
     if(res.data.state){
+      Toast.success('发布成功！');
       wx.navigateBack({
         delta: 1,
       })
+    }
+    else{
+      Toast.fail('发布失败！');
     }
   },
 
@@ -97,14 +102,31 @@ Page({
   },
 
   // 点击底部按钮
-  onBottomButtonClick(){
-    if(this.data.page_type){
-      // 修改
-      this.updateAnnouncement();
-    }else{
-      // 发布
-      this.createAnnouncement();
+  async onBottomButtonClick(){
+    if(this.data.QueryParams.title.length===0){
+      // 给出提示
+      const rest = await showToast({
+        title: '请输入公告标题！',
+        icon: 'error',
+        duration: 1500
+      });
     }
+    else if(this.data.QueryParams.content.length===0){
+      const rest = await showToast({
+        title: '请输入公告内容！',
+        icon: 'error',
+        duration: 1500
+      });
+    }
+    else{
+      if(this.data.page_type){
+        // 修改
+        this.updateAnnouncement();
+      }else{
+        // 发布
+        this.createAnnouncement();
+      }
+    } 
   },
 
   // 根据id获取公告

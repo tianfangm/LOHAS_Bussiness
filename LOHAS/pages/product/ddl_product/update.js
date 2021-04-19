@@ -1,9 +1,9 @@
 // pages/product/ddl_product/update.js
 import {
   request,
-  uploadFile
 } from "../../../request/index.js";
 import regeneratorRuntime from "../../../lib/runtime/runtime";
+import { uploadFile } from '../../../utils/asyncWx.js'
 
 const twoYearsAgo = 365 * 24 * 3600 * 1000;
 Page({
@@ -133,12 +133,11 @@ Page({
     this.data.QueryParams.product_intro = event.detail;
   },
 
-  onBottomButtonClick(){
-    if(this.data.page_type){
+  onBottomButtonClick() {
+    if (this.data.page_type) {
       // 修改
       this.updataDdlProduct();
-    }
-    else{
+    } else {
       // 发布
       this.createDdlProduct();
     }
@@ -147,7 +146,7 @@ Page({
   // 修改临期商品
   async updataDdlProduct() {
     try {
-      if(this.data.fileList[0].url!=this.data.QueryParams.product_pic){
+      if (this.data.fileList[0].url != this.data.QueryParams.product_pic) {
         const res = await uploadFile({
           url: "/pic/upload",
           method: "POST",
@@ -222,26 +221,30 @@ Page({
   },
 
   async getDdlProductById() {
-    const res = await request({
-      url: "/ddlproduct/querybyId",
-      method: "GET",
-      data: {
-        product_id: this.data.QueryParams.product_id
-      },
-      header: {
-        "content-type": "application/json",
-        "token": wx.getStorageSync('token')
+    try {
+      const res = await request({
+        url: "/ddlproduct/querybyId",
+        method: "GET",
+        data: {
+          product_id: this.data.QueryParams.product_id
+        },
+        header: {
+          "content-type": "application/json",
+          "token": wx.getStorageSync('token')
+        }
+      });
+      if (res.statusCode === 200) {
+        console.log("查询成功！");
+        this.setData({
+          QueryParams: res.data,
+          fileList: [{
+            url: res.data.product_pic,
+            name: '预加载图片'
+          }]
+        })
       }
-    });
-    if (res.statusCode === 200) {
-      console.log("查询成功！");
-      this.setData({
-        QueryParams: res.data,
-        fileList: [{
-          url: res.data.product_pic,
-          name: '预加载图片'
-        }]
-      })
+    } catch (error) {
+      console.log(error)
     }
   },
 

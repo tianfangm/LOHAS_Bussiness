@@ -25,15 +25,15 @@
         <navigator class="Trans" url="./update">
             <view>修改信息</view>
         </navigator>
-        <navigator class="Trans" url="./order">
+        <navigator class="Trans" bindtap="onSuggestionClick" url="./order">
             <view>商户推广</view>
             <image class="Instru" src=""></image>
         </navigator>
-        <navigator class="Trans" url="">
+        <navigator class="Trans" bindtap="onSuggestionClick" url="">
             <view>联系客服</view>
             <image class="Instru" src=""></image>
         </navigator>
-        <navigator class="Trans" url="">
+        <navigator class="Trans" bindtap="onSuggestionClick" url="">
             <view>投诉建议</view>
             <image class="Instru" src=""></image>
         </navigator>

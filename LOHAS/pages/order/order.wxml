@@ -6,7 +6,8 @@
         </view>
         <view class="page-section-spacing">
           <scroll-view scroll-y="true" bindscrolltoupper="upper" bindscrolltolower="lower" bindscroll="scroll" scroll-into-view="{{toView}}" scroll-top="{{scrollTop}}">
-            <view 
+            <block wx:if="{{orders.length!==0}}">
+              <view 
             class="menu_item" 
             wx:for="{{orders}}"
             wx:for-index="index"
@@ -33,6 +34,10 @@
              </navigator>
              <view class="apart"></view>
             </view>
+            </block>
+            <block wx:else>
+              暂无订单
+            </block>
           </scroll-view>
         </view>
       </view>

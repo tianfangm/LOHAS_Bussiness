@@ -6,7 +6,8 @@
         </view>
         <view class="page-section-spacing">
           <scroll-view scroll-y="true" bindscrolltoupper="upper" bindscrolltolower="lower" bindscroll="scroll" scroll-into-view="{{toView}}" scroll-top="{{scrollTop}}">
-            <view 
+            <block wx:if="{{forsale_products.length!==0}}">
+              <view 
             class="menu_item" 
             wx:for="{{forsale_products}}"
             wx:for-index="index"
@@ -51,6 +52,10 @@
              </navigator>
              <view class="apart"></view>
             </view>
+            </block>
+            <block wx:else>
+              暂无折扣商品，试着发布一个吧！
+            </block>
           </scroll-view>
         </view>
       </view>

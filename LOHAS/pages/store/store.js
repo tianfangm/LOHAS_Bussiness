@@ -16,25 +16,7 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-    const userinfo = wx.getStorageSync('userInfo');
-    var that = this;
-    that.setData({
-      userinfo:userinfo
-    });
-    this.setMarkers();
-    wx.getLocation({
-      type: 'wgs84', // 默认为 wgs84 返回 gps 坐标，gcj02 返回可用于 wx.openLocation 的坐标
-      success: function (res) {
-        that.mpCtx = wx.createMapContext("myMap");
-        //赋值经纬度
-        // console.log("onLoad", res),
-        that.setData({
-          latitude: res.latitude,
-          longitude: res.longitude,
-        })
-      }
-    })
-    console.log(this.data.userinfo)
+    
   },
 
   setMarkers(){
@@ -80,7 +62,24 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
-
+    const userinfo = wx.getStorageSync('userInfo');
+    var that = this;
+    that.setData({
+      userinfo:userinfo
+    });
+    this.setMarkers();
+    wx.getLocation({
+      type: 'wgs84', // 默认为 wgs84 返回 gps 坐标，gcj02 返回可用于 wx.openLocation 的坐标
+      success: function (res) {
+        that.mpCtx = wx.createMapContext("myMap");
+        //赋值经纬度
+        // console.log("onLoad", res),
+        that.setData({
+          latitude: res.latitude,
+          longitude: res.longitude,
+        })
+      }
+    })
   },
 
   /**

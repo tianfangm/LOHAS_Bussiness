@@ -2,9 +2,9 @@
 
 import {
   request,
-  uploadFile
 } from "../../../request/index.js";
 import regeneratorRuntime from "../../../lib/runtime/runtime";
+import { uploadFile } from '../../../utils/asyncWx.js'
 
 Page({
 
@@ -37,7 +37,7 @@ Page({
         page_type: 1,
         bottom_button_text: "修改",
       });
-      this.data.QueryParams.product_id=options.product_id;
+      this.data.QueryParams.product_id = options.product_id;
       this.getMysterBoxById();
     }
     console.log(this.data.fileList)
@@ -87,61 +87,27 @@ Page({
 
   // 修改盲盒
   async changeMysteryBox() {
-    // 判断图片是否修改
-    if (this.data.fileList[0].url != this.data.QueryParams.product_pic) {
-      console.log("图片修改！！！");
-      const res = await uploadFile({
-        url: "/pic/upload",
-        method: "POST",
-        name: "file",
-        filePath: this.data.fileList[0].url,
-        formData: {
-          "file": "file"
+    try {
+      // 判断图片是否修改
+      if (this.data.fileList[0].url != this.data.QueryParams.product_pic) {
+        console.log("图片修改！！！");
+        const res = await uploadFile({
+          url: "/pic/upload",
+          method: "POST",
+          name: "file",
+          filePath: this.data.fileList[0].url,
+          formData: {
+            "file": "file"
+          }
+        });
+        var obj = JSON.parse(res.data);
+        if (obj.status === "done") {
+          console.log("修改图片成功！");
+          this.data.QueryParams.product_pic = obj.pic_url;
         }
-      });
-      var obj = JSON.parse(res.data);
-      if (obj.status === "done") {
-        console.log("修改图片成功！");
-        this.data.QueryParams.product_pic = obj.pic_url;
       }
-    }
-    const res1 = await request({
-      url: "/mysterybox/update",
-      method: "POST",
-      data: this.data.QueryParams,
-      header: {
-        "content-type": "application/json",
-        "token": wx.getStorageSync('token')
-      }
-    });
-    console.log(res1);
-    if (res1.data.state) {
-      wx.navigateBack({
-        delta: 1,
-      })
-      console.log("修改盲盒成功！！！");
-    } else {
-      console.log("修改失败！！！")
-    }
-
-  },
-
-  // 发布盲盒
-  async createMysteryBox() {
-    const res = await uploadFile({
-      url: "/pic/upload",
-      method: "POST",
-      name: "file",
-      filePath: this.data.fileList[0].url,
-      formData: {
-        "file": "file"
-      }
-    });
-    var obj = JSON.parse(res.data);
-    if (obj.status === "done") {
-      this.data.QueryParams.product_pic = obj.pic_url;
       const res1 = await request({
-        url: "/mysterybox/create",
+        url: "/mysterybox/update",
         method: "POST",
         data: this.data.QueryParams,
         header: {
@@ -154,10 +120,52 @@ Page({
         wx.navigateBack({
           delta: 1,
         })
-        console.log("发布盲盒成功！！！");
+        console.log("修改盲盒成功！！！");
+      } else {
+        console.log("修改失败！！！")
       }
-    } else {
-      console.log("发布失败");
+    } catch (error) {
+      console.log(error);
+    }
+
+  },
+
+  // 发布盲盒
+  async createMysteryBox() {
+    try {
+      const res = await uploadFile({
+        url: "/pic/upload",
+        method: "POST",
+        name: "file",
+        filePath: this.data.fileList[0].url,
+        formData: {
+          "file": "file"
+        }
+      });
+      var obj = JSON.parse(res.data);
+      if (obj.status === "done") {
+        this.data.QueryParams.product_pic = obj.pic_url;
+        const res1 = await request({
+          url: "/mysterybox/create",
+          method: "POST",
+          data: this.data.QueryParams,
+          header: {
+            "content-type": "application/json",
+            "token": wx.getStorageSync('token')
+          }
+        });
+        console.log(res1);
+        if (res1.data.state) {
+          wx.navigateBack({
+            delta: 1,
+          })
+          console.log("发布盲盒成功！！！");
+        }
+      } else {
+        console.log("发布失败");
+      }
+    } catch (error) {
+      console.log(error)
     }
   },
 
@@ -175,29 +183,33 @@ Page({
 
   // 根据id查找信息
   async getMysterBoxById() {
-    const res = await request({
-      url: "/mysterybox/querybyId",
-      method: "GET",
-      data: {
-        product_id: this.data.QueryParams.product_id
-      },
-      header: {
-        "content-type": "application/json",
-        "token": wx.getStorageSync('token')
-      }
-    });
-    if (res.statusCode === 200) {
-      // 查询成功
-      this.setData({
-        QueryParams: res.data,
-        fileList: [{
-          url: res.data.product_pic,
-          name: '预加载图片'
-        }]
+    try {
+      const res = await request({
+        url: "/mysterybox/querybyId",
+        method: "GET",
+        data: {
+          product_id: this.data.QueryParams.product_id
+        },
+        header: {
+          "content-type": "application/json",
+          "token": wx.getStorageSync('token')
+        }
       });
-      console.log("查询成功！");
-    } else {
-      console.log("查询失败！！！")
+      if (res.statusCode === 200) {
+        // 查询成功
+        this.setData({
+          QueryParams: res.data,
+          fileList: [{
+            url: res.data.product_pic,
+            name: '预加载图片'
+          }]
+        });
+        console.log("查询成功！");
+      } else {
+        console.log("查询失败！！！")
+      }
+    } catch (error) {
+      console.log(error);
     }
   },
 
