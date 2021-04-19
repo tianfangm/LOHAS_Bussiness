@@ -11,7 +11,7 @@
   
 </view>
 <van-divider contentPosition="center">我的店铺</van-divider>
-<view>
+<view >
   <van-grid clickable column-num="2">
   <van-grid-item
     icon="clock-o"
@@ -39,6 +39,8 @@
     url="/pages/product/mystery_box/mystery_box"
     text="盲盒商品管理"
   />
+  </van-grid>
+  <van-grid clickable column-num="2">
   <van-grid-item
     icon="orders-o"
     link-type="navigateTo"
@@ -47,3 +49,4 @@
   />
   </van-grid>
 </view>
+

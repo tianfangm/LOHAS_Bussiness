@@ -24,7 +24,7 @@
   <van-field
     value="{{ message }}"
     label="盲盒价格"
-    type="{{digit}}"
+    type="digit"
     placeholder="请输入盲盒价格"
     autosize
     border="{{ false }}"

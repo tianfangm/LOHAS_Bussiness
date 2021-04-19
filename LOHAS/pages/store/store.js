@@ -45,6 +45,7 @@ Page({
     this.mpCtx.moveToLocation({
       longitude:this.data.userinfo.shop_longitude,
       latitude:this.data.userinfo.shop_latitude,
+      scale:13,
       success:()=>{
         console.log("移过去了")
       }

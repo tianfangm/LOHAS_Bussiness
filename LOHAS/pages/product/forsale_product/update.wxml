@@ -23,7 +23,7 @@
   <van-field
     value="{{ current_cost }}"
     label="当前价格"
-    type="number"
+    type="digit"
     placeholder="请输入当前商品价格"
     border="{{ false }}"
     bind:change="onChangeForslaeProductCurrentPrice"
@@ -34,6 +34,7 @@
   <van-field
     value="{{ origin_cost }}"
     label="商品原价"
+    type="digit"
     placeholder="请输入原商品价格"
     border="{{ false }}"
     bind:change="onChangeForslaeProductOriginalPrice"
