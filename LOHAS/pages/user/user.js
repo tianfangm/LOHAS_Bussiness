@@ -148,7 +148,8 @@ Page({
         isLogin: true
       });
     }
-    if (userinfo.avatar) {
+    if (userinfo.shop_name) {
+      console.log(userinfo.shop_name)
       this.setData({
         userinfo: userinfo
       });

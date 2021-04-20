@@ -36,7 +36,7 @@ Page({
    */
   onLoad: function (options) {
     const userinfo = wx.getStorageSync('userInfo');
-    if (userinfo.shop_name) {
+    if (userinfo.avatar) {
       this.setData({
         userinfo: userinfo
       })
